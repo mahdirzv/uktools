@@ -50,6 +50,27 @@ const tools = [
     description: "Crime statistics for any UK postcode from official Police UK data.",
     tags: ["Crime rates", "Neighbourhood", "Postcode"],
   },
+  {
+    href: "/parking",
+    emoji: "🅿️",
+    title: "Parking Appeal",
+    description: "Challenge your council parking fine (PCN) for free. Build your appeal letter in 2 minutes.",
+    tags: ["PCN", "Parking fine", "Challenge"],
+  },
+  {
+    href: "/flood",
+    emoji: "🌊",
+    title: "FloodAlert",
+    description: "Check active flood warnings and live river levels for any UK postcode. Environment Agency data.",
+    tags: ["Flood risk", "River levels", "Environment Agency"],
+  },
+  {
+    href: "/epc",
+    emoji: "🏡",
+    title: "EPC Checker",
+    description: "Look up the energy rating for any property. See annual costs and what improvements could save you.",
+    tags: ["EPC rating", "Energy costs", "Home efficiency"],
+  },
 ]
 
 export default function Home() {
@@ -114,7 +135,7 @@ export default function Home() {
       </div>
 
       <p className="mt-10 text-center text-xs text-muted-foreground">
-        More tools coming soon — flood risk, NHS dentist finder, and more.
+        More tools coming soon — NHS dentist finder and more.
       </p>
     </div>
   )
