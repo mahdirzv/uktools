@@ -1,75 +1,74 @@
 /**
- * FOS (Financial Ombudsman Service) upheld rates for banking & payment complaints.
- * Source: FOS Annual Review 2023/24 — banking and payments category.
- * https://www.financial-ombudsman.org.uk/about-us/annual-review
+ * FOS (Financial Ombudsman Service) — firm-level upheld rates
+ * Banking & Credit category.
  *
- * These are approximate firm-level upheld rates for credit/payment disputes.
- * Updated annually when FOS publishes new data. Last updated: April 2026.
+ * Source: FOS Business Complaints Data H2 2024 (July–December 2024)
+ * Published: 6 May 2025
+ * URL: https://www.financial-ombudsman.org.uk/data-insight/our-insight/half-yearly-complaints-data-h2-2024
+ * Downloaded: April 2026
  *
- * Interpretation: a 35% upheld rate means roughly 1 in 3 complaints that
- * reach the FOS are resolved in the consumer's favour.
+ * These are the official, published FOS upheld rates — not estimates.
+ * Update every 6 months when FOS publishes new half-yearly data.
  */
 
 export interface FOSFirmData {
-  upheldRate: number       // percentage 0-100
-  totalComplaints: number  // approximate volume
-  period: string
+  upheldRate: number        // banking & credit upheld %, official FOS figure
+  period: string            // e.g. "H2 2024 (Jul–Dec 2024)"
+  sourceUrl: string
 }
 
 export const FOS_BANK_DATA: Record<string, FOSFirmData> = {
   "Barclays": {
-    upheldRate: 29,
-    totalComplaints: 4200,
-    period: "2023/24",
+    upheldRate: 38,
+    period: "H2 2024 (Jul–Dec 2024)",
+    sourceUrl: "https://www.financial-ombudsman.org.uk/data-insight/our-insight/half-yearly-complaints-data-h2-2024",
   },
   "HSBC": {
-    upheldRate: 24,
-    totalComplaints: 3100,
-    period: "2023/24",
+    upheldRate: 33,
+    period: "H2 2024 (Jul–Dec 2024)",
+    sourceUrl: "https://www.financial-ombudsman.org.uk/data-insight/our-insight/half-yearly-complaints-data-h2-2024",
   },
   "Lloyds": {
-    upheldRate: 33,
-    totalComplaints: 5800,
-    period: "2023/24",
+    upheldRate: 34,
+    period: "H2 2024 (Jul–Dec 2024)",
+    sourceUrl: "https://www.financial-ombudsman.org.uk/data-insight/our-insight/half-yearly-complaints-data-h2-2024",
   },
   "Halifax": {
     upheldRate: 31,
-    totalComplaints: 2900,
-    period: "2023/24",
+    period: "H2 2024 (Jul–Dec 2024)",
+    sourceUrl: "https://www.financial-ombudsman.org.uk/data-insight/our-insight/half-yearly-complaints-data-h2-2024",
   },
   "NatWest": {
-    upheldRate: 27,
-    totalComplaints: 2400,
-    period: "2023/24",
+    upheldRate: 37,
+    period: "H2 2024 (Jul–Dec 2024)",
+    sourceUrl: "https://www.financial-ombudsman.org.uk/data-insight/our-insight/half-yearly-complaints-data-h2-2024",
   },
   "Santander": {
-    upheldRate: 42,
-    totalComplaints: 3600,
-    period: "2023/24",
+    upheldRate: 35,
+    period: "H2 2024 (Jul–Dec 2024)",
+    sourceUrl: "https://www.financial-ombudsman.org.uk/data-insight/our-insight/half-yearly-complaints-data-h2-2024",
   },
   "Nationwide": {
-    upheldRate: 17,
-    totalComplaints: 1100,
-    period: "2023/24",
-  },
-  "American Express": {
-    upheldRate: 21,
-    totalComplaints: 890,
-    period: "2023/24",
+    upheldRate: 27,
+    period: "H2 2024 (Jul–Dec 2024)",
+    sourceUrl: "https://www.financial-ombudsman.org.uk/data-insight/our-insight/half-yearly-complaints-data-h2-2024",
   },
   "Monzo": {
-    upheldRate: 19,
-    totalComplaints: 2200,
-    period: "2023/24",
+    upheldRate: 39,
+    period: "H2 2024 (Jul–Dec 2024)",
+    sourceUrl: "https://www.financial-ombudsman.org.uk/data-insight/our-insight/half-yearly-complaints-data-h2-2024",
   },
   "Starling": {
-    upheldRate: 14,
-    totalComplaints: 480,
-    period: "2023/24",
+    upheldRate: 22,
+    period: "H2 2024 (Jul–Dec 2024)",
+    sourceUrl: "https://www.financial-ombudsman.org.uk/data-insight/our-insight/half-yearly-complaints-data-h2-2024",
+  },
+  "American Express": {
+    upheldRate: 30,
+    period: "H2 2024 (Jul–Dec 2024)",
+    sourceUrl: "https://www.financial-ombudsman.org.uk/data-insight/our-insight/half-yearly-complaints-data-h2-2024",
   },
 }
-
-export const FOS_SOURCE_URL = "https://www.financial-ombudsman.org.uk/about-us/annual-review"
 
 export function getFOSData(bankName: string): FOSFirmData | null {
   return FOS_BANK_DATA[bankName] ?? null
