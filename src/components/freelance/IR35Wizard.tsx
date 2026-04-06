@@ -79,7 +79,7 @@ export function IR35Wizard() {
       <Section
         number={3}
         title="Mutuality of Obligation"
-        description="Is there an ongoing obligation for the client to offer work and for you to accept it?"
+        description="Is there an ongoing obligation for the client to offer you work, and for you to accept it?"
       >
         <RadioGroup
           value={answers.mutuality ?? ""}
@@ -87,15 +87,15 @@ export function IR35Wizard() {
         >
           <RadioOption
             value="discrete"
-            label="No — each project is discrete, no obligation either way"
+            label="No — each project is discrete; no obligation either way"
           />
           <RadioOption
             value="expectation"
-            label="There's an expectation of ongoing work but no contract to that effect"
+            label="Unclear — there's an expectation of ongoing work but nothing contractual"
           />
           <RadioOption
             value="ongoing"
-            label="There's an ongoing obligation / I'm on a rolling contract"
+            label="Yes — there's a continuing obligation or rolling contract"
           />
         </RadioGroup>
       </Section>

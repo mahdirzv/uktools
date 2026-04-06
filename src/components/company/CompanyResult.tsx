@@ -66,7 +66,7 @@ export function CompanyResult({ report }: { report: CompanyReport }) {
         </CardContent>
       </Card>
 
-      <TrustSignals signals={signals} />
+      <TrustSignals signals={signals} companyNumber={profile.company_number} />
 
       <DirectorList officers={officers} />
 

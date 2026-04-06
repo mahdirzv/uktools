@@ -139,11 +139,21 @@ const BAD_STATUSES = new Set([
   "insolvency-proceedings",
 ])
 
+function companyAgeLabel(incorporatedDate: string): string {
+  const d = new Date(incorporatedDate)
+  const now = new Date()
+  const totalMonths =
+    (now.getFullYear() - d.getFullYear()) * 12 + (now.getMonth() - d.getMonth())
+  if (totalMonths < 1) return "less than a month old"
+  if (totalMonths < 12) return `${totalMonths} months old`
+  const years = Math.floor(totalMonths / 12)
+  return `${years} year${years !== 1 ? "s" : ""} old`
+}
+
 export function computeTrustSignals(profile: CompanyProfile): TrustSignal[] {
   const signals: TrustSignal[] = []
   const status = profile.company_status?.toLowerCase() ?? ""
 
-  // Status signals
   if (status === "active") {
     signals.push({ level: "green", label: "Company is Active" })
   } else if (status === "dormant") {
@@ -153,30 +163,57 @@ export function computeTrustSignals(profile: CompanyProfile): TrustSignal[] {
     signals.push({ level: "red", label: `Company status: ${display}` })
   }
 
-  // Age signals
   if (profile.date_of_creation) {
     const created = new Date(profile.date_of_creation)
     const now = new Date()
     const ageMs = now.getTime() - created.getTime()
+    const ageMonths =
+      (now.getFullYear() - created.getFullYear()) * 12 +
+      (now.getMonth() - created.getMonth())
     const ageYears = ageMs / (1000 * 60 * 60 * 24 * 365.25)
-    if (ageYears >= 2) {
-      signals.push({ level: "green", label: `Incorporated ${Math.floor(ageYears)} years ago` })
+    const formatted = new Date(profile.date_of_creation).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    })
+    const ageStr = companyAgeLabel(profile.date_of_creation)
+
+    if (ageMonths < 12) {
+      signals.push({
+        level: "red",
+        label: `Incorporated ${formatted} — ${ageStr}. Less than 12 months old — exercise caution`,
+      })
+    } else if (ageYears < 2) {
+      signals.push({
+        level: "amber",
+        label: `Incorporated ${formatted} — ${ageStr}`,
+      })
     } else {
-      signals.push({ level: "amber", label: "Incorporated less than 2 years ago" })
+      signals.push({
+        level: "green",
+        label: `Incorporated ${formatted} — ${ageStr}`,
+      })
     }
   }
 
-  // Accounts signals
+  const accountsDueStr =
+    profile.accounts?.next_accounts?.due_on ?? profile.accounts?.next_due
   const accountsOverdue =
-    profile.accounts?.overdue ||
-    profile.accounts?.next_accounts?.overdue
+    profile.accounts?.overdue || profile.accounts?.next_accounts?.overdue
+
   if (accountsOverdue) {
-    signals.push({ level: "red", label: "Accounts are overdue" })
+    signals.push({ level: "red", label: "Accounts OVERDUE — check with caution" })
+  } else if (accountsDueStr) {
+    const dueDate = new Date(accountsDueStr)
+    if (dueDate.getTime() < Date.now()) {
+      signals.push({ level: "red", label: "Accounts OVERDUE — check with caution" })
+    } else {
+      signals.push({ level: "green", label: "Accounts filed on time" })
+    }
   } else {
-    signals.push({ level: "green", label: "Accounts filed on time" })
+    signals.push({ level: "amber", label: "No accounts filed yet (new company)" })
   }
 
-  // Charges signals
   if (profile.has_charges) {
     signals.push({ level: "amber", label: "Has charges (mortgages/loans) registered" })
   } else {

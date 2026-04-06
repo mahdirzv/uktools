@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { ClaimWizard } from "@/components/claim/ClaimWizard"
 import { LetterDisplay } from "@/components/claim/LetterDisplay"
 import { FOSEscalationPaywall } from "@/components/claim/FOSEscalationPaywall"
@@ -54,6 +55,7 @@ function S75WizardInner() {
   const router = useRouter()
 
   const [step, setStep] = useState(0)
+  const [amountTouched, setAmountTouched] = useState(false)
   const [form, setForm] = useState<Section75FormData>({
     reason: "not-delivered",
     paymentMethod: "credit",
@@ -144,12 +146,41 @@ function S75WizardInner() {
                 <Input
                   id="amount"
                   type="number"
-                  min="100"
-                  max="30000"
+                  min="0"
                   placeholder="e.g. 500"
                   value={form.amount}
-                  onChange={(e) => update("amount", e.target.value)}
+                  onChange={(e) => {
+                    update("amount", e.target.value)
+                    if (!amountTouched) setAmountTouched(true)
+                  }}
+                  onBlur={() => setAmountTouched(true)}
                 />
+                {amountTouched && form.amount !== "" && Number(form.amount) <= 0 && (
+                  <div className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+                    Please enter the amount you paid.
+                  </div>
+                )}
+                {amountTouched && Number(form.amount) > 0 && Number(form.amount) < 100 && (
+                  <div className="rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+                    <p>
+                      Section 75 requires a minimum purchase of £100.
+                      For purchases under £100, use the Chargeback route instead.
+                    </p>
+                    <Link
+                      href="/claim/chargeback"
+                      className="mt-2 inline-block font-medium underline underline-offset-2"
+                    >
+                      Switch to chargeback →
+                    </Link>
+                  </div>
+                )}
+                {amountTouched && Number(form.amount) > 30000 && (
+                  <div className="rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+                    Section 75 covers purchases up to £30,000.
+                    For larger amounts, the claim process is the same but you may want
+                    legal advice — a solicitor can advise on the strongest approach.
+                  </div>
+                )}
               </div>
 
               <div className="space-y-2">

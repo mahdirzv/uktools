@@ -97,6 +97,15 @@ export function IR35Result({ result }: IR35ResultProps) {
         )}
       </div>
 
+      <div className="rounded-lg border border-muted bg-muted/30 p-4 text-xs text-muted-foreground">
+        <p>
+          <strong className="text-foreground">Note:</strong> HMRC&apos;s CEST tool does not assess
+          Mutuality of Obligation. This question is based on key tribunal cases
+          including <em>Carmichael v National Power</em> [1999] and{" "}
+          <em>Stringfellow Restaurants v Quashie</em> [2012].
+        </p>
+      </div>
+
       <ContractorInsuranceCTA />
     </div>
   )

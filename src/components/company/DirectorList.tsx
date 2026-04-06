@@ -38,6 +38,17 @@ export function DirectorList({ officers }: { officers: Officer[] }) {
   )
 }
 
+function formatTenure(appointedOn: string): string {
+  const d = new Date(appointedOn)
+  const now = new Date()
+  const totalMonths =
+    (now.getFullYear() - d.getFullYear()) * 12 + (now.getMonth() - d.getMonth())
+  if (totalMonths < 1) return "less than a month"
+  if (totalMonths < 12) return `${totalMonths} months`
+  const years = Math.floor(totalMonths / 12)
+  return `${years} year${years !== 1 ? "s" : ""}`
+}
+
 function OfficerRow({
   officer,
   resigned = false,
@@ -56,7 +67,11 @@ function OfficerRow({
         </span>
       </div>
       <div className="flex flex-col items-end gap-0.5 text-xs text-muted-foreground">
-        {officer.appointed_on && <span>Appointed {officer.appointed_on}</span>}
+        {officer.appointed_on && (
+          <span>
+            Appointed {officer.appointed_on} — {formatTenure(officer.appointed_on)}
+          </span>
+        )}
         {officer.resigned_on && <span>Resigned {officer.resigned_on}</span>}
       </div>
     </div>

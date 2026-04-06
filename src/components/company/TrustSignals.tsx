@@ -13,7 +13,13 @@ const COLOR_MAP = {
   red: "text-red-600 bg-red-50 border-red-200",
 } as const
 
-export function TrustSignals({ signals }: { signals: TrustSignal[] }) {
+export function TrustSignals({
+  signals,
+  companyNumber,
+}: {
+  signals: TrustSignal[]
+  companyNumber?: string
+}) {
   const grouped = {
     green: signals.filter((s) => s.level === "green"),
     amber: signals.filter((s) => s.level === "amber"),
@@ -39,6 +45,20 @@ export function TrustSignals({ signals }: { signals: TrustSignal[] }) {
           })
         )}
       </div>
+      {companyNumber && (
+        <p className="text-xs text-muted-foreground">
+          For a full director history including past companies, check the{" "}
+          <a
+            href={`https://find-and-update.company-information.service.gov.uk/company/${companyNumber}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2"
+          >
+            Companies House profile
+          </a>{" "}
+          directly.
+        </p>
+      )}
     </div>
   )
 }

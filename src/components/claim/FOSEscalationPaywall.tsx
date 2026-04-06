@@ -10,7 +10,7 @@ import {
   generateFOSLetter,
   type Section75FormData,
 } from "@/lib/claim-generator"
-import { getFOSData, FOS_SOURCE_URL } from "@/lib/fos-data"
+import { getFOSData } from "@/lib/fos-data"
 
 function FOSEscalationPaywallInner({
   formData,
@@ -56,7 +56,7 @@ function FOSEscalationPaywallInner({
               back. If {provider} refuses within 8 weeks, escalating to the
               FOS is free and your odds are real.{" "}
               <a
-                href={FOS_SOURCE_URL}
+                href={fosData.sourceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline underline-offset-2"
