@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 
-function getBasicAuth(): string | null {
+const BASE = "https://epc.opendatacommunities.org/api/v1/domestic"
+
+function getAuth(): string | null {
   const creds = process.env.EPC_API_CREDENTIALS?.trim()
   if (!creds) return null
   return Buffer.from(creds).toString("base64")
@@ -11,69 +13,65 @@ export async function GET(
   { params }: { params: Promise<{ lmk: string }> }
 ) {
   const { lmk } = await params
-  const auth = getBasicAuth()
-  if (!auth) {
-    return NextResponse.json({ configured: false }, { status: 200 })
-  }
+  const auth = getAuth()
+  if (!auth) return NextResponse.json({ configured: false }, { status: 200 })
 
   try {
+    // EPC API: single certificate fetched via search?lmk-key= (not /domestic/{lmk})
     const res = await fetch(
-      `https://epc.opendatacommunities.org/api/v1/domestic/${encodeURIComponent(lmk)}`,
+      `${BASE}/search?lmk-key=${encodeURIComponent(lmk)}&size=1`,
       {
-        headers: {
-          Authorization: `Basic ${auth}`,
-          Accept: "application/json",
-        },
-        signal: AbortSignal.timeout(8000),
+        headers: { Authorization: `Basic ${auth}`, Accept: "application/json" },
+        signal: AbortSignal.timeout(10_000),
       }
     )
 
     if (!res.ok) {
-      const text = await res.text()
-      return NextResponse.json(
-        { error: `EPC API error: ${res.status} ${text}` },
-        { status: 502 }
-      )
+      console.error(`[epc/lmk] ${res.status}`)
+      return NextResponse.json({ error: "Certificate not found" }, { status: 502 })
     }
 
     const text = await res.text()
-    if (!text || text.trim() === "") {
-      return NextResponse.json({ error: "Record not found" }, { status: 404 })
+    if (!text?.trim()) {
+      return NextResponse.json({ error: "Certificate not found" }, { status: 404 })
     }
+
     const json = JSON.parse(text)
-    const row = (json.rows ?? [])[0] ?? null
+    const r: Record<string, string> = (json.rows ?? [])[0]
+    if (!r) return NextResponse.json({ error: "Certificate not found" }, { status: 404 })
 
-    if (!row) {
-      return NextResponse.json({ error: "Record not found" }, { status: 404 })
-    }
-
-    const record = {
-      lmkKey: row["lmk-key"],
-      address: row.address,
-      postcode: row.postcode,
-      posttown: row.posttown,
-      currentRating: row["current-energy-rating"],
-      currentScore: Number(row["current-energy-efficiency"] ?? 0),
-      potentialRating: row["potential-energy-rating"],
-      potentialScore: Number(row["potential-energy-efficiency"] ?? 0),
-      co2Emissions: row["co2-emissions-current"],
-      heatingCostCurrent: Number(row["heating-cost-current"] ?? 0),
-      heatingCostPotential: Number(row["heating-cost-potential"] ?? 0),
-      hotWaterCostCurrent: Number(row["hot-water-cost-current"] ?? 0),
-      lightingCostCurrent: Number(row["lighting-cost-current"] ?? 0),
-      mainheatDescription: row["mainheat-description"],
-      wallsDescription: row["walls-description"],
-      roofDescription: row["roof-description"],
-      floorDescription: row["floor-description"],
-      glazedArea: row["glazed-area"],
-      inspectionDate: row["inspection-date"],
-    }
-
-    return NextResponse.json({ configured: true, record })
-  } catch {
-    return NextResponse.json(
-      { error: "Failed to fetch EPC record. Please try again." },
-      { status: 500 }
-    )
+    return NextResponse.json({
+      configured: true,
+      record: {
+        lmkKey:                r["lmk-key"],
+        address:               [r.address1, r.address2, r.address3].filter(Boolean).join(", "),
+        postcode:              r.postcode,
+        posttown:              r.posttown,
+        propertyType:          r["property-type"],
+        builtForm:             r["built-form"],
+        currentRating:         r["current-energy-rating"],
+        currentScore:          Number(r["current-energy-efficiency"]) || 0,
+        potentialRating:       r["potential-energy-rating"],
+        potentialScore:        Number(r["potential-energy-efficiency"]) || 0,
+        co2Current:            Number(r["co2-emissions-current"]) || 0,
+        co2Potential:          Number(r["co2-emissions-potential"]) || 0,
+        heatingCostCurrent:    Number(r["heating-cost-current"]) || 0,
+        heatingCostPotential:  Number(r["heating-cost-potential"]) || 0,
+        hotWaterCostCurrent:   Number(r["hot-water-cost-current"]) || 0,
+        hotWaterCostPotential: Number(r["hot-water-cost-potential"]) || 0,
+        lightingCostCurrent:   Number(r["lighting-cost-current"]) || 0,
+        lightingCostPotential: Number(r["lighting-cost-potential"]) || 0,
+        mainheatDescription:   r["mainheat-description"],
+        wallsDescription:      r["walls-description"],
+        roofDescription:       r["roof-description"],
+        floorDescription:      r["floor-description"],
+        windowsDescription:    r["windows-description"],
+        inspectionDate:        r["inspection-date"],
+        lodgementDate:         r["lodgement-date"],
+      },
+    })
+  } catch (err) {
+    console.error("[epc/lmk] error:", err instanceof Error ? err.message : err)
+    return NextResponse.json({ error: "Could not fetch certificate" }, { status: 500 })
   }
 }
