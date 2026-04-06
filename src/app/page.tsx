@@ -48,6 +48,14 @@ const tools = [
       "Track your UK subscriptions, see total monthly spend, and get renewal alerts before you get charged.",
     tags: ["Subscriptions", "Monthly spend", "Renewals"],
   },
+  {
+    href: "/crime",
+    emoji: "🔍",
+    title: "CrimeCheck",
+    description:
+      "Check crime statistics for any UK postcode. See a full breakdown by category from official Police UK data.",
+    tags: ["Crime rates", "Neighbourhood safety", "Postcode checker"],
+  },
 ]
 
 export default function Home() {
@@ -99,7 +107,7 @@ export default function Home() {
       </div>
 
       <p className="mt-12 text-center text-xs text-muted-foreground">
-        More tools coming soon — flood risk, NHS dentist finder, crime checker, and more.
+        More tools coming soon — flood risk, NHS dentist finder, and more.
       </p>
     </div>
   )
