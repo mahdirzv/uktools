@@ -13,17 +13,18 @@ export interface StampDutyResult {
   total: number
 }
 
+// Band boundaries are the ceiling of the previous band.
+// Taxable slice = min(price, ceiling) - floor (no +1 needed).
 const STANDARD_BANDS: { from: number; to: number | null; rate: number }[] = [
-  { from: 0, to: 125_000, rate: 0 },
-  { from: 125_001, to: 250_000, rate: 0.02 },
-  { from: 250_001, to: 925_000, rate: 0.05 },
-  { from: 925_001, to: 1_500_000, rate: 0.10 },
-  { from: 1_500_001, to: null, rate: 0.12 },
+  { from: 0,           to: 250_000,    rate: 0.00 },
+  { from: 250_000,     to: 925_000,    rate: 0.05 },
+  { from: 925_000,     to: 1_500_000,  rate: 0.10 },
+  { from: 1_500_000,   to: null,       rate: 0.12 },
 ]
 
 const FTB_BANDS: { from: number; to: number | null; rate: number }[] = [
-  { from: 0, to: 300_000, rate: 0 },
-  { from: 300_001, to: 500_000, rate: 0.05 },
+  { from: 0,         to: 300_000, rate: 0.00 },
+  { from: 300_000,   to: 500_000, rate: 0.05 },
 ]
 
 function calculateBands(
@@ -35,21 +36,14 @@ function calculateBands(
   let total = 0
 
   for (const band of bands) {
-    if (price < band.from) break
+    if (price <= band.from) break
 
-    const upper = band.to ?? price
-    const taxable = Math.min(price, upper) - band.from + 1
-    const effectiveRate = band.rate + surcharge
-    const tax = Math.round(taxable * effectiveRate)
+    const upper    = band.to ?? price
+    const taxable  = Math.min(price, upper) - band.from
+    const rate     = band.rate + surcharge
+    const tax      = Math.round(taxable * rate)
 
-    result.push({
-      from: band.from,
-      to: band.to,
-      rate: effectiveRate,
-      taxable,
-      tax,
-    })
-
+    result.push({ from: band.from, to: band.to, rate, taxable, tax })
     total += tax
   }
 
@@ -64,11 +58,9 @@ export function calculateStampDuty(
 
   const surcharge = buyerType === "additional" ? 0.03 : 0
 
-  // First-time buyer relief: only applies when total price ≤ £500,000
   if (buyerType === "first-time" && price <= 500_000) {
     return calculateBands(price, FTB_BANDS, surcharge)
   }
 
-  // Standard rates (also used for FTB above £500k, and additional with surcharge)
   return calculateBands(price, STANDARD_BANDS, surcharge)
 }
