@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { FaqAccordion } from "@/components/claim/FaqAccordion"
 import { CreditCard, Wallet, Check } from "lucide-react"
+import { VideoPlayer } from "@/components/shared/VideoPlayer"
 
 export const metadata: Metadata = {
   title: "Section 75 Claim Letter Builder UK | Free Template + Guide",
@@ -30,18 +31,12 @@ export default function ClaimPage() {
             </p>
           </div>
 
-          <div className="mt-8 overflow-hidden rounded-xl border bg-black">
-            <video
-              src="/s75-explainer.mp4"
-              controls
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full"
-              aria-label="How Section 75 works — animated explainer"
-            />
-          </div>
+          <VideoPlayer
+            src="/s75-explainer.mp4"
+            title="How Section 75 works"
+            duration="25 sec"
+            className="mt-8"
+          />
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2">
             <Card>

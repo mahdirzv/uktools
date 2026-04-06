@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { IR35Wizard } from "@/components/freelance/IR35Wizard"
 import { ArrowLeft } from "lucide-react"
+import { VideoPlayer } from "@/components/shared/VideoPlayer"
 
 export const metadata: Metadata = {
   title: "IR35 Status Checker UK 2026 — Am I Inside or Outside IR35?",
@@ -30,18 +31,11 @@ export default function IR35Page() {
           </p>
         </div>
 
-        <div className="overflow-hidden rounded-xl border bg-black">
-          <video
-            src="/ir35-explainer.mp4"
-            controls
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full"
-            aria-label="IR35 inside vs outside explained — animated"
-          />
-        </div>
+        <VideoPlayer
+          src="/ir35-explainer.mp4"
+          title="Inside vs outside IR35 — what it actually costs you"
+          duration="24 sec"
+        />
 
         <IR35Wizard />
       </main>

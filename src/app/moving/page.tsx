@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { MovingTabs } from "@/components/moving/MovingTabs"
+import { VideoPlayer } from "@/components/shared/VideoPlayer"
 
 export const metadata: Metadata = {
   title: "Moving Home Cost Calculator UK 2026 | Stamp Duty + All Costs",
@@ -19,18 +20,12 @@ export default function MovingPage() {
         more — plus a checklist and utility switching hub.
       </p>
 
-      <div className="mt-6 overflow-hidden rounded-xl border bg-black">
-        <video
-          src="/stamp-duty-explainer.mp4"
-          controls
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full"
-          aria-label="How stamp duty works in the UK — animated explainer"
-        />
-      </div>
+      <VideoPlayer
+        src="/stamp-duty-explainer.mp4"
+        title="How stamp duty actually works"
+        duration="33 sec"
+        className="mt-6"
+      />
 
       <MovingTabs />
     </div>
