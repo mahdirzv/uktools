@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
 function getBasicAuth(): string | null {
-  const creds = process.env.EPC_API_CREDENTIALS
+  const creds = process.env.EPC_API_CREDENTIALS?.trim()
   if (!creds) return null
   return Buffer.from(creds).toString("base64")
 }
@@ -36,7 +36,11 @@ export async function GET(
       )
     }
 
-    const json = await res.json()
+    const text = await res.text()
+    if (!text || text.trim() === "") {
+      return NextResponse.json({ error: "Record not found" }, { status: 404 })
+    }
+    const json = JSON.parse(text)
     const row = (json.rows ?? [])[0] ?? null
 
     if (!row) {
