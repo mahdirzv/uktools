@@ -1,3 +1,7 @@
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { contractorInsuranceLink } from "@/lib/awin"
+import { Shield } from "lucide-react"
 import type { DayRateBreakdown } from "@/lib/day-rate-calc"
 
 function formatCurrency(value: number): string {
@@ -101,6 +105,32 @@ export function DayRateResult({ breakdown }: DayRateResultProps) {
           </p>
         </div>
       )}
+
+      <div className="rounded-xl border p-5 space-y-3">
+        <div className="flex items-center gap-2">
+          <Shield className="size-5 text-primary" />
+          <h3 className="text-base font-semibold">Contractor insurance</h3>
+        </div>
+        <p className="text-sm text-muted-foreground">
+          Most clients require Professional Indemnity and Public Liability
+          insurance before you start a contract.
+        </p>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            render={
+              <a
+                href={contractorInsuranceLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            }
+          >
+            Compare contractor insurance
+          </Button>
+          <Badge variant="secondary">Coming soon</Badge>
+        </div>
+      </div>
     </div>
   )
 }

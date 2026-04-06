@@ -163,4 +163,53 @@ Yours faithfully,
 [Your contact email]`
 }
 
+export interface FOSEscalationData {
+  bankName: string
+  claimDate: string
+  amount: string
+  merchantName: string
+  paymentDate: string
+  reason: ClaimReason
+}
+
+export function generateFOSEscalationLetter(data: FOSEscalationData): string {
+  const date = new Date().toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  })
+
+  return `[Your Name]
+[Your Address]
+${date}
+
+Financial Ombudsman Service
+Exchange Tower
+London E14 9SR
+
+Dear Sir/Madam,
+
+Re: Complaint against ${data.bankName || "[Bank Name]"} — Section 75 Claim Reference
+
+I am writing to bring a formal complaint against ${data.bankName || "[Bank Name]"} regarding their handling of my Section 75 claim under the Consumer Credit Act 1974.
+
+I made a Section 75 claim on ${formatDate(data.claimDate)} in relation to a purchase of £${data.amount || "[X]"} from ${data.merchantName || "[Merchant]"} on ${formatDate(data.paymentDate)}.
+
+${data.bankName || "[Bank Name]"} rejected my claim on [rejection date — or: has failed to respond within 8 weeks].
+
+I believe this rejection is incorrect because: ${REASON_SENTENCES[data.reason]}
+
+I am seeking: a refund of £${data.amount || "[X]"} to my credit card account.
+
+I have attached:
+- Copy of original Section 75 letter sent to bank
+- Bank's rejection letter (if received)
+
+Please acknowledge receipt of this complaint.
+
+Yours faithfully,
+[Your Name]
+[Your reference number from bank, if given]`
+}
+
 export { REASON_LABELS }

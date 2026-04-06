@@ -1,10 +1,10 @@
 "use client"
 
-import { Suspense } from "react"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { PaymentPlaceholder } from "@/components/shared/PaymentPlaceholder"
-import { AlertTriangle, CheckCircle2, XCircle } from "lucide-react"
+import { contractorInsuranceLink } from "@/lib/awin"
+import { AlertTriangle, CheckCircle2, Shield, XCircle } from "lucide-react"
 import type { IR35Result as IR35ResultType } from "@/lib/ir35-scorer"
 
 interface IR35ResultProps {
@@ -97,14 +97,37 @@ export function IR35Result({ result }: IR35ResultProps) {
         )}
       </div>
 
-      <Suspense>
-        <PaymentPlaceholder
-          price="£9.99"
-          title="Download your IR35 status summary letter"
-          description="Includes: Your questionnaire answers, result summary, and a covering note for your contract file."
-          ctaLabel="Get IR35 Status Letter"
-        />
-      </Suspense>
+      <ContractorInsuranceCTA />
+    </div>
+  )
+}
+
+function ContractorInsuranceCTA() {
+  return (
+    <div className="rounded-xl border p-5 space-y-3">
+      <div className="flex items-center gap-2">
+        <Shield className="size-5 text-primary" />
+        <h3 className="text-base font-semibold">Protect your contract</h3>
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Whether inside or outside IR35, contractors need Professional Indemnity
+        and Public Liability insurance. Your client will likely require it.
+      </p>
+      <div className="flex items-center gap-2">
+        <Button
+          variant="outline"
+          render={
+            <a
+              href={contractorInsuranceLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+            />
+          }
+        >
+          Get contractor insurance quotes
+        </Button>
+        <Badge variant="secondary">Coming soon</Badge>
+      </div>
     </div>
   )
 }

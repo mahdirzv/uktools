@@ -1,9 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { ClaimWizard } from "@/components/claim/ClaimWizard"
-import { LetterPreview } from "@/components/claim/LetterPreview"
+import { LetterDisplay } from "@/components/claim/LetterDisplay"
+import { FOSEscalationPaywall } from "@/components/claim/FOSEscalationPaywall"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -25,7 +26,7 @@ import {
   type MerchantContactStatus,
 } from "@/lib/claim-generator"
 
-const STEPS = ["What happened?", "Payment details", "Merchant details", "Preview"]
+const STEPS = ["What happened?", "Payment details", "Merchant details", "Your letter"]
 
 const CARD_PROVIDERS: CardProvider[] = [
   "Barclays",
@@ -50,12 +51,9 @@ const REASON_OPTIONS: { value: ClaimReason; label: string }[] = [
 ]
 
 function S75WizardInner() {
-  const searchParams = useSearchParams()
   const router = useRouter()
-  const devBypass = searchParams.get("preview") === "1"
 
   const [step, setStep] = useState(0)
-  const [paid, setPaid] = useState(devBypass)
   const [form, setForm] = useState<Section75FormData>({
     reason: "not-delivered",
     paymentMethod: "credit",
@@ -248,11 +246,10 @@ function S75WizardInner() {
         )}
 
         {step === 3 && (
-          <LetterPreview
-            letter={letter}
-            showFull={paid}
-            onPayClick={() => setPaid(true)}
-          />
+          <div className="space-y-0">
+            <LetterDisplay letter={letter} />
+            <FOSEscalationPaywall />
+          </div>
         )}
       </ClaimWizard>
 

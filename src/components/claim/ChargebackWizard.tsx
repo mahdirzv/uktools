@@ -1,9 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { useSearchParams } from "next/navigation"
 import { ClaimWizard } from "@/components/claim/ClaimWizard"
-import { LetterPreview } from "@/components/claim/LetterPreview"
+import { LetterDisplay } from "@/components/claim/LetterDisplay"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -48,11 +47,7 @@ const REASON_OPTIONS: { value: ClaimReason; label: string }[] = [
 ]
 
 function ChargebackWizardInner() {
-  const searchParams = useSearchParams()
-  const devBypass = searchParams.get("preview") === "1"
-
   const [step, setStep] = useState(0)
-  const [paid, setPaid] = useState(devBypass)
   const [form, setForm] = useState<ChargebackFormData>({
     reason: "not-delivered",
     cardType: "debit",
@@ -210,11 +205,7 @@ function ChargebackWizardInner() {
         )}
 
         {step === 2 && (
-          <LetterPreview
-            letter={letter}
-            showFull={paid}
-            onPayClick={() => setPaid(true)}
-          />
+          <LetterDisplay letter={letter} />
         )}
       </ClaimWizard>
 
