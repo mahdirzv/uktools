@@ -33,6 +33,14 @@ const tools = [
     tags: ["Day rate", "IR35", "Contracting"],
   },
   {
+    href: "/company",
+    emoji: "🏢",
+    title: "TrustCheck",
+    description:
+      "Look up any UK company on Companies House. See plain-English trust signals — active status, accounts, directors, and red flags.",
+    tags: ["Companies House", "Business check", "Trust signals"],
+  },
+  {
     href: "/subscriptions",
     emoji: "🔄",
     title: "Subscription Tracker",
