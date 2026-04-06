@@ -18,6 +18,20 @@ export default function MovingPage() {
         including stamp duty (with first-time buyer relief), solicitor fees, surveys and
         more — plus a checklist and utility switching hub.
       </p>
+
+      <div className="mt-6 overflow-hidden rounded-xl border bg-black">
+        <video
+          src="/stamp-duty-explainer.mp4"
+          controls
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full"
+          aria-label="How stamp duty works in the UK — animated explainer"
+        />
+      </div>
+
       <MovingTabs />
     </div>
   )
