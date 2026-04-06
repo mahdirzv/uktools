@@ -32,6 +32,14 @@ const tools = [
       "Day rate calculator and IR35 status checker for UK contractors and freelancers.",
     tags: ["Day rate", "IR35", "Contracting"],
   },
+  {
+    href: "/subscriptions",
+    emoji: "🔄",
+    title: "Subscription Tracker",
+    description:
+      "Track your UK subscriptions, see total monthly spend, and get renewal alerts before you get charged.",
+    tags: ["Subscriptions", "Monthly spend", "Renewals"],
+  },
 ]
 
 export default function Home() {
