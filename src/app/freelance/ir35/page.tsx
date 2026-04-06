@@ -30,6 +30,19 @@ export default function IR35Page() {
           </p>
         </div>
 
+        <div className="overflow-hidden rounded-xl border bg-black">
+          <video
+            src="/ir35-explainer.mp4"
+            controls
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full"
+            aria-label="IR35 inside vs outside explained — animated"
+          />
+        </div>
+
         <IR35Wizard />
       </main>
     </div>

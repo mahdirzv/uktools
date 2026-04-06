@@ -30,7 +30,20 @@ export default function ClaimPage() {
             </p>
           </div>
 
-          <div className="mt-12 grid gap-4 sm:grid-cols-2">
+          <div className="mt-8 overflow-hidden rounded-xl border bg-black">
+            <video
+              src="/s75-explainer.mp4"
+              controls
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full"
+              aria-label="How Section 75 works — animated explainer"
+            />
+          </div>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-2">
             <Card>
               <CardHeader>
                 <div className="flex items-center gap-2">
