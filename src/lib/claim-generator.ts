@@ -163,21 +163,60 @@ Yours faithfully,
 [Your contact email]`
 }
 
-export interface FOSEscalationData {
-  bankName: string
-  claimDate: string
-  amount: string
-  merchantName: string
-  paymentDate: string
-  reason: ClaimReason
+const FOS_REASON_PARAGRAPHS: Record<ClaimReason, string> = {
+  "not-delivered":
+    "The merchant failed to deliver the goods/service I paid for. Despite payment being made in full, {merchantName} has not provided what was agreed.",
+  administration:
+    "The merchant, {merchantName}, has entered administration/closed down without fulfilling their contractual obligation. My funds are at risk.",
+  "not-as-described":
+    "The goods/service provided by {merchantName} were significantly not as described at the point of sale, constituting a misrepresentation under the Misrepresentation Act 1967.",
+  "faulty-refused":
+    "The goods provided by {merchantName} were faulty. Despite my request for a remedy, {merchantName} has refused to provide a repair, replacement, or refund as required under the Consumer Rights Act 2015.",
+  "service-not-completed":
+    "The service contracted with {merchantName} was not completed to the agreed standard, representing a material breach of contract.",
 }
 
-export function generateFOSEscalationLetter(data: FOSEscalationData): string {
+const FOS_BREACH_SENTENCES: Record<ClaimReason, string> = {
+  "not-delivered":
+    "The merchant failed to deliver the goods/service that I paid for, constituting a clear breach of contract.",
+  administration:
+    "The merchant ceased trading without fulfilling their contractual obligation, leaving me without the goods/services I paid for.",
+  "not-as-described":
+    "The goods/service received were significantly not as described, constituting misrepresentation under the Misrepresentation Act 1967.",
+  "faulty-refused":
+    "The goods received were faulty and the merchant refused a remedy, breaching the Consumer Rights Act 2015.",
+  "service-not-completed":
+    "The service was not completed to the agreed standard, representing a material breach of the contract.",
+}
+
+const FOS_MERCHANT_CONTACT_SENTENCES: Record<MerchantContactStatus, string> = {
+  no: "I have not yet contacted the merchant as I understand my right to claim directly against the credit provider under Section 75 is independent of any action against the merchant.",
+  yes: "I contacted {merchantName} prior to raising this claim. They were unable to resolve the matter satisfactorily.",
+  "yes-refused":
+    "I contacted {merchantName} prior to raising this claim. They refused to provide any remedy.",
+}
+
+export function generateFOSLetter(data: Section75FormData): string {
   const date = new Date().toLocaleDateString("en-GB", {
     day: "numeric",
     month: "long",
     year: "numeric",
   })
+
+  const provider = data.cardProvider || "[Card Provider]"
+  const merchant = data.merchantName || "[Merchant Name]"
+  const amount = data.amount || "[X]"
+
+  const reasonParagraph = FOS_REASON_PARAGRAPHS[data.reason].replaceAll(
+    "{merchantName}",
+    merchant
+  )
+
+  const breachSentence = FOS_BREACH_SENTENCES[data.reason]
+
+  const contactSentence = FOS_MERCHANT_CONTACT_SENTENCES[
+    data.merchantContacted
+  ].replaceAll("{merchantName}", merchant)
 
   return `[Your Name]
 [Your Address]
@@ -186,30 +225,46 @@ ${date}
 Financial Ombudsman Service
 Exchange Tower
 London E14 9SR
+complaints@financial-ombudsman.org.uk
 
 Dear Sir/Madam,
 
-Re: Complaint against ${data.bankName || "[Bank Name]"} — Section 75 Claim Reference
+Re: Complaint against ${provider} — Ref: Section 75 Claim, ${merchant}, £${amount}
 
-I am writing to bring a formal complaint against ${data.bankName || "[Bank Name]"} regarding their handling of my Section 75 claim under the Consumer Credit Act 1974.
+I am writing to bring a formal complaint against ${provider} regarding their handling of my Section 75 claim under the Consumer Credit Act 1974, and to request the Financial Ombudsman Service investigates this matter.
 
-I made a Section 75 claim on ${formatDate(data.claimDate)} in relation to a purchase of £${data.amount || "[X]"} from ${data.merchantName || "[Merchant]"} on ${formatDate(data.paymentDate)}.
+BACKGROUND
 
-${data.bankName || "[Bank Name]"} rejected my claim on [rejection date — or: has failed to respond within 8 weeks].
+On ${formatDate(data.paymentDate)}, I paid £${amount} to ${merchant} using my ${provider} credit card for: ${data.purchaseDescription || "[Description of purchase]"}.
 
-I believe this rejection is incorrect because: ${REASON_SENTENCES[data.reason]}
+${reasonParagraph}
 
-I am seeking: a refund of £${data.amount || "[X]"} to my credit card account.
+I submitted a formal Section 75 claim to ${provider} on the basis that, as a credit provider, they are jointly and severally liable under Section 75(1) of the Consumer Credit Act 1974.
 
-I have attached:
-- Copy of original Section 75 letter sent to bank
-- Bank's rejection letter (if received)
+${provider}'s response was unsatisfactory. ${contactSentence}
 
-Please acknowledge receipt of this complaint.
+WHY I BELIEVE ${provider}'S POSITION IS INCORRECT
+
+Under Section 75 of the Consumer Credit Act 1974, the credit provider bears equal liability with the supplier for any misrepresentation or breach of contract. This liability is strict — it does not require negligence or fault on the part of the credit provider.
+
+The facts of my case clearly establish a breach of contract: ${breachSentence}
+
+I therefore request that the Financial Ombudsman Service:
+1. Investigates ${provider}'s refusal to honour their Section 75 liability
+2. Directs ${provider} to credit my account with £${amount}
+3. Considers whether ${provider}'s handling of my complaint was fair and reasonable
+
+I am available to provide further documentation as required.
 
 Yours faithfully,
 [Your Name]
-[Your reference number from bank, if given]`
+[Your Address]
+[Your Phone Number]
+[Your Email Address]
+[Your ${provider} account — last 4 digits: XXXX]
+
+Enc: Copy of original Section 75 letter sent to ${provider}
+     [Any correspondence from ${provider}]`
 }
 
 export { REASON_LABELS }

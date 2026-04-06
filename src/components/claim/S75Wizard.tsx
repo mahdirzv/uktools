@@ -248,7 +248,7 @@ function S75WizardInner() {
         {step === 3 && (
           <div className="space-y-0">
             <LetterDisplay letter={letter} />
-            <FOSEscalationPaywall />
+            <FOSEscalationPaywall formData={form} />
           </div>
         )}
       </ClaimWizard>
