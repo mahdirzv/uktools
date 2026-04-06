@@ -1,65 +1,90 @@
-import Image from "next/image";
+import type { Metadata } from "next"
+import Link from "next/link"
+
+export const metadata: Metadata = {
+  title: "UK Tools — Free calculators and guides for UK consumers",
+  description:
+    "Free tools for UK homebuyers, freelancers, and consumers. Stamp duty calculator, Section 75 claim builder, IR35 checker, and more.",
+}
+
+const tools = [
+  {
+    href: "/moving",
+    emoji: "🏠",
+    title: "Moving Home Toolkit",
+    description:
+      "Stamp duty calculator, full cost breakdown, moving checklist, and utility switching hub.",
+    tags: ["First-time buyer", "Stamp duty", "Moving costs"],
+  },
+  {
+    href: "/claim",
+    emoji: "💳",
+    title: "ClaimKit",
+    description:
+      "Build your Section 75 or chargeback letter in 2 minutes. Get your money back from failed merchants.",
+    tags: ["Section 75", "Chargeback", "Consumer rights"],
+  },
+  {
+    href: "/freelance",
+    emoji: "💼",
+    title: "FreelanceKit",
+    description:
+      "Day rate calculator and IR35 status checker for UK contractors and freelancers.",
+    tags: ["Day rate", "IR35", "Contracting"],
+  },
+]
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="mx-auto w-full max-w-3xl px-4 py-16 sm:py-24">
+      <div className="mb-12 text-center">
+        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+          UK Tools
+        </h1>
+        <p className="mt-4 text-lg text-muted-foreground">
+          Free calculators and guides built for UK consumers.
+          No sign-up. No ads. Just useful tools.
+        </p>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-1">
+        {tools.map((tool) => (
+          <Link
+            key={tool.href}
+            href={tool.href}
+            className="group flex flex-col gap-3 rounded-xl border bg-card p-6 transition-colors hover:border-foreground/30 hover:bg-accent"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+            <div className="flex items-start gap-4">
+              <span className="text-3xl">{tool.emoji}</span>
+              <div className="flex-1 min-w-0">
+                <h2 className="text-xl font-semibold group-hover:underline">
+                  {tool.title}
+                </h2>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {tool.description}
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {tool.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <span className="text-muted-foreground/40 group-hover:text-muted-foreground transition-colors text-xl">
+                →
+              </span>
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      <p className="mt-12 text-center text-xs text-muted-foreground">
+        More tools coming soon — flood risk, NHS dentist finder, crime checker, and more.
+      </p>
     </div>
-  );
+  )
 }
