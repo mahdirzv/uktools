@@ -27,7 +27,19 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <footer className="border-t py-6">
+          <div className="mx-auto max-w-5xl px-4 flex flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground">
+            <span>UK Tools — free calculators for UK consumers</span>
+            <div className="flex gap-4">
+              <a href="/about" className="hover:text-foreground transition-colors">About</a>
+              <a href="/privacy" className="hover:text-foreground transition-colors">Privacy</a>
+              <a href="https://github.com/mahdirzv/uktools" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
+            </div>
+          </div>
+        </footer>
+      </body>
     </html>
   );
 }

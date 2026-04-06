@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Card, CardContent } from "@/components/ui/card"
-import { calculateStampDuty, type BuyerType } from "@/lib/stamp-duty"
+import { calculateStampDuty, SDLT_META, type BuyerType } from "@/lib/stamp-duty"
 import { DEFAULT_COSTS, totalOtherCosts } from "@/lib/moving-costs"
 import { CostBreakdownTable } from "./CostBreakdownTable"
 
@@ -26,7 +26,11 @@ export function StampDutyCalc({ switchTabAction }: { switchTabAction: () => void
     Object.fromEntries(DEFAULT_COSTS.map((c) => [c.key, c.defaultValue]))
   )
 
-  const price = Number(priceInput) || 0
+  const rawPrice = Number(priceInput)
+  const price = priceInput !== "" && rawPrice > 0 ? rawPrice : 0
+  const priceError = priceInput !== "" && (rawPrice <= 0 || isNaN(rawPrice))
+    ? "Please enter a valid property price greater than £0"
+    : null
   const sdlt = useMemo(() => calculateStampDuty(price, buyerType), [price, buyerType])
   const otherTotal = useMemo(
     () => (includeOtherCosts ? totalOtherCosts(otherCosts) : 0),
@@ -48,6 +52,17 @@ export function StampDutyCalc({ switchTabAction }: { switchTabAction: () => void
             value={priceInput}
             onChange={(e) => setPriceInput(e.target.value)}
           />
+          {priceError && (
+            <p className="text-xs text-destructive">{priceError}</p>
+          )}
+          {price > 0 && (
+            <p className="text-xs text-muted-foreground">
+              Scotland or Wales?{" "}
+              <a href="https://revenue.scot/taxes/land-and-buildings-transaction-tax" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">LBTT</a>
+              {" · "}
+              <a href="https://www.gov.wales/land-transaction-tax-guide" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">LTT</a>
+            </p>
+          )}
         </div>
         <div className="space-y-2">
           <Label>Buyer type</Label>
@@ -69,6 +84,17 @@ export function StampDutyCalc({ switchTabAction }: { switchTabAction: () => void
           <Card>
             <CardContent>
               <CostBreakdownTable bands={sdlt.bands} total={sdlt.total} />
+              <p className="mt-3 text-xs text-muted-foreground">
+                Rates effective {SDLT_META.effectiveFrom} · England &amp; Northern Ireland only ·{" "}
+                <a
+                  href={SDLT_META.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-2 hover:text-foreground"
+                >
+                  Source: gov.uk
+                </a>
+              </p>
             </CardContent>
           </Card>
 

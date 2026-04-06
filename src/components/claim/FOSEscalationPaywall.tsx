@@ -10,6 +10,7 @@ import {
   generateFOSLetter,
   type Section75FormData,
 } from "@/lib/claim-generator"
+import { getFOSData, FOS_SOURCE_URL } from "@/lib/fos-data"
 
 function FOSEscalationPaywallInner({
   formData,
@@ -20,6 +21,7 @@ function FOSEscalationPaywallInner({
   const isPreview = searchParams.get("preview") === "1"
 
   const provider = formData.cardProvider || "your bank"
+  const fosData = formData.cardProvider ? getFOSData(formData.cardProvider) : null
   const fosDeadline = new Date()
   fosDeadline.setMonth(fosDeadline.getMonth() + 6)
   const deadlineStr = fosDeadline.toLocaleDateString("en-GB", {
@@ -37,17 +39,43 @@ function FOSEscalationPaywallInner({
           What happens if {provider} rejects your claim?
         </h3>
         <div className="space-y-2 text-sm text-muted-foreground">
+          {fosData ? (
+            <p>
+              In 2023/24, the FOS upheld{" "}
+              <strong className="text-foreground font-semibold">
+                {fosData.upheldRate}% of banking complaints against {provider}
+              </strong>{" "}
+              — that&apos;s roughly{" "}
+              {fosData.upheldRate >= 30
+                ? "1 in 3"
+                : fosData.upheldRate >= 20
+                ? "1 in 5"
+                : "around 1 in 7"}{" "}
+              resolved in the consumer&apos;s favour. Banks often reject valid
+              S75 claims on the first attempt, counting on customers not pushing
+              back. If {provider} refuses within 8 weeks, escalating to the
+              FOS is free and your odds are real.{" "}
+              <a
+                href={FOS_SOURCE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2"
+              >
+                FOS Annual Review 2023/24
+              </a>
+            </p>
+          ) : (
+            <p>
+              Banks reject 1 in 3 Section 75 claims on first submission — often
+              hoping customers won&apos;t push back. If {provider} refuses within
+              8 weeks, you have 6 months to escalate to the Financial Ombudsman
+              Service. The process is completely free for you.
+            </p>
+          )}
           <p>
-            Banks reject 1 in 3 Section 75 claims on first submission — often
-            hoping customers won&apos;t push back. If {provider} refuses within
-            8 weeks, you have 6 months to escalate to the Financial Ombudsman
-            Service. FOS upholds 35% of banking complaints in consumers&apos;
-            favour, and the process is completely free for you.
-          </p>
-          <p>
-            But writing a persuasive FOS complaint is different from the initial
-            Section 75 letter. You need to demonstrate why the bank&apos;s
-            position is legally wrong — not just repeat your original claim.
+            Writing a persuasive FOS complaint is different from the initial
+            Section 75 letter — you need to show why the bank&apos;s rejection
+            is legally wrong, not just repeat your original claim.
           </p>
         </div>
       </div>
