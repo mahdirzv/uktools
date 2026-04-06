@@ -41,3 +41,6 @@ yarn-error.log*
 next-env.d.ts
 .gitnexus
 .gitnexus/
+.claude/skills/
+SPEC_*.md
+TICKET_*.md
