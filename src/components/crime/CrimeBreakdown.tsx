@@ -2,6 +2,7 @@ import {
   NATIONAL_RATES_PER_1000,
   BENCHMARK_POPULATION,
 } from "@/lib/crime-benchmarks"
+import { DataSourceFooter } from "@/components/shared/DataSourceFooter"
 
 interface CrimeCategory {
   category: string
@@ -83,23 +84,15 @@ export function CrimeBreakdown({
       </div>
 
       {data.latestMonth && (
-        <p className="text-xs text-muted-foreground">
-          Data covers crimes reported to {formatMonth(data.latestMonth)} — Police UK data
-          typically 2–3 months behind current date. Source:{" "}
-          <a
-            href="https://data.police.uk"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline underline-offset-2"
-          >
-            data.police.uk
-          </a>
-          {checkedAt && (
-            <>
-              {" · "}Last checked: {new Date(checkedAt).toLocaleString("en-GB")}
-            </>
-          )}
-        </p>
+        <DataSourceFooter
+          sourceLabel="data.police.uk"
+          sourceUrl="https://data.police.uk/about/"
+          licenceLabel="Open Government Licence v3.0"
+          licenceUrl="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+          lastChecked={checkedAt}
+          coverage="England, Wales, Northern Ireland"
+          caveat={`Data covers crimes reported to ${formatMonth(data.latestMonth)} and is typically 2–3 months behind current date.`}
+        />
       )}
 
       <p className="text-xs text-muted-foreground">

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { OfferCard } from "@/components/shared/OfferCard"
+import { DataSourceFooter } from "@/components/shared/DataSourceFooter"
 import { awinLink } from "@/lib/awin"
 
 // ── EPC colour coding (official gov.uk scheme) ────────────────────────────
@@ -306,18 +307,15 @@ export function EpcTool({ className = "" }: { className?: string }) {
       <div className={className}>
         <EpcDetail record={record} onBack={() => setRecord(null)} />
         {checkedAt && (
-          <p className="text-xs text-muted-foreground">
-            Source:{" "}
-            <a
-              href="https://epc.opendatacommunities.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline underline-offset-2"
-            >
-              gov.uk EPC register
-            </a>
-            {" · "}Last checked: {new Date(checkedAt).toLocaleString("en-GB")}
-          </p>
+          <DataSourceFooter
+            sourceLabel="EPC Open Data Communities"
+            sourceUrl="https://epc.opendatacommunities.org"
+            licenceLabel="OGL v3.0 (non-address fields)"
+            licenceUrl="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+            lastChecked={checkedAt}
+            coverage="England and Wales"
+            caveat="Address/postcode fields are subject to separate Ordnance Survey and Royal Mail rights. See Data licence & copyright notice for permitted use."
+          />
         )}
       </div>
     )
@@ -411,18 +409,15 @@ export function EpcTool({ className = "" }: { className?: string }) {
           ))}
 
           {checkedAt && (
-            <p className="text-xs text-muted-foreground">
-              Source:{" "}
-              <a
-                href="https://epc.opendatacommunities.org"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline underline-offset-2"
-              >
-                gov.uk EPC register
-              </a>
-              {" · "}Last checked: {new Date(checkedAt).toLocaleString("en-GB")}
-            </p>
+            <DataSourceFooter
+              sourceLabel="EPC Open Data Communities"
+              sourceUrl="https://epc.opendatacommunities.org"
+              licenceLabel="OGL v3.0 (non-address fields)"
+              licenceUrl="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+              lastChecked={checkedAt}
+              coverage="England and Wales"
+              caveat="Address/postcode fields are subject to separate Ordnance Survey and Royal Mail rights. See Data licence & copyright notice for permitted use."
+            />
           )}
         </div>
       )}

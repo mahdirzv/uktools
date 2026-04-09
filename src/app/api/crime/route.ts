@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
+import { geocodeUkPostcode } from "@/lib/postcode-geocode"
 
 const POLICE_API = "https://data.police.uk/api"
-const POSTCODES_API = "https://api.postcodes.io/postcodes"
 
 const CATEGORIES: Record<string, string> = {
   "anti-social-behaviour": "Anti-social behaviour",
@@ -34,11 +34,6 @@ function getLast12Months(): string[] {
   return months
 }
 
-interface PostcodesResult {
-  status: number
-  result: { latitude: number; longitude: number } | null
-}
-
 interface PoliceCrime {
   category: string
   month: string
@@ -55,23 +50,29 @@ export async function GET(request: NextRequest) {
 
   const clean = postcode.replace(/\s+/g, "").toUpperCase()
 
-  const geoRes = await fetch(`${POSTCODES_API}/${encodeURIComponent(clean)}`)
-  if (!geoRes.ok) {
-    if (geoRes.status === 404) {
+  let lat: number
+  let lng: number
+
+  try {
+    const coordinates = await geocodeUkPostcode(clean)
+    if (!coordinates) {
       return NextResponse.json({ error: "Invalid UK postcode" }, { status: 400 })
     }
+    lat = coordinates.latitude
+    lng = coordinates.longitude
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : "Unknown error"
+    if (msg.includes("not configured")) {
+      return NextResponse.json(
+        { error: "Postcode lookup service is not configured" },
+        { status: 503 }
+      )
+    }
     return NextResponse.json(
-      { error: "Failed to look up postcode" },
+      { error: "Failed to look up postcode coordinates" },
       { status: 502 }
     )
   }
-
-  const geoData: PostcodesResult = await geoRes.json()
-  if (!geoData.result) {
-    return NextResponse.json({ error: "Invalid UK postcode" }, { status: 400 })
-  }
-
-  const { latitude: lat, longitude: lng } = geoData.result
   const months = getLast12Months()
 
   const results = await Promise.allSettled(

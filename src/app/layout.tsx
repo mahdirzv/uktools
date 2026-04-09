@@ -47,6 +47,7 @@ export default function RootLayout({
             <div className="flex gap-4">
               <a href="/about" className="hover:text-foreground transition-colors">About</a>
               <a href="/privacy" className="hover:text-foreground transition-colors">Privacy</a>
+              <a href="/data-sources" className="hover:text-foreground transition-colors">Data sources</a>
               <a href="https://github.com/mahdirzv/uktools" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
             </div>
           </div>

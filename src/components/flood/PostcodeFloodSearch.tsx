@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { FloodWarningCard } from "./FloodWarningCard"
 import { RiverGaugeCard } from "./RiverGaugeCard"
 import { HomeInsuranceCTA } from "./HomeInsuranceCTA"
+import { DataSourceFooter } from "@/components/shared/DataSourceFooter"
 
 interface FloodWarning {
   severity: string
@@ -120,18 +121,15 @@ export function PostcodeFloodSearch() {
             </div>
           )}
 
-          <p className="text-xs text-muted-foreground">
-            Source:{" "}
-            <a
-              href="https://environment.data.gov.uk/flood-monitoring/doc/reference"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline underline-offset-2"
-            >
-              Environment Agency flood monitoring
-            </a>
-            {" · "}Last checked: {new Date(data.lastUpdated).toLocaleString("en-GB")}
-          </p>
+          <DataSourceFooter
+            sourceLabel="Environment Agency flood monitoring API"
+            sourceUrl="https://environment.data.gov.uk/flood-monitoring/doc/reference"
+            licenceLabel="Open Government Licence v3.0"
+            licenceUrl="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+            lastChecked={data.lastUpdated}
+            coverage="England"
+            caveat="For flood safety alerts, use official warning channels. This API is for informational use and may be delayed."
+          />
 
           <HomeInsuranceCTA />
         </div>

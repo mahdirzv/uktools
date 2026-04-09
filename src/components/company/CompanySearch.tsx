@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { CompanyResult } from "@/components/company/CompanyResult"
 import { Search, Loader2 } from "lucide-react"
 import type { CompanySearchItem, CompanyReport } from "@/lib/companies-house"
+import { DataSourceFooter } from "@/components/shared/DataSourceFooter"
 
 export function CompanySearch() {
   const [query, setQuery] = useState("")
@@ -135,18 +136,13 @@ export function CompanySearch() {
             ))}
           </div>
           {checkedAt && (
-            <p className="text-xs text-muted-foreground">
-              Source:{" "}
-              <a
-                href="https://developer.company-information.service.gov.uk/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline underline-offset-2"
-              >
-                Companies House API
-              </a>
-              {" · "}Last checked: {new Date(checkedAt).toLocaleString("en-GB")}
-            </p>
+            <DataSourceFooter
+              sourceLabel="Companies House API"
+              sourceUrl="https://developer.company-information.service.gov.uk/"
+              lastChecked={checkedAt}
+              coverage="UK companies register"
+              caveat="Companies House data is not intended to be comprehensive for every circumstance. Consider independent professional advice before acting on it."
+            />
           )}
         </section>
       )}
@@ -172,18 +168,13 @@ export function CompanySearch() {
           </button>
           <CompanyResult report={report} />
           {checkedAt && (
-            <p className="text-xs text-muted-foreground">
-              Source:{" "}
-              <a
-                href="https://developer.company-information.service.gov.uk/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline underline-offset-2"
-              >
-                Companies House API
-              </a>
-              {" · "}Last checked: {new Date(checkedAt).toLocaleString("en-GB")}
-            </p>
+            <DataSourceFooter
+              sourceLabel="Companies House API"
+              sourceUrl="https://developer.company-information.service.gov.uk/"
+              lastChecked={checkedAt}
+              coverage="UK companies register"
+              caveat="Companies House data is not intended to be comprehensive for every circumstance. Consider independent professional advice before acting on it."
+            />
           )}
         </div>
       )}
