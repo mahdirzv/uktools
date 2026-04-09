@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Check, Copy } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { OfferCard } from "@/components/shared/OfferCard"
 import { awinLink, PENDING_MERCHANTS } from "@/lib/awin"
@@ -28,8 +29,18 @@ export function PCNLetterDisplay({ letter }: PCNLetterDisplayProps) {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">Your Appeal Letter</h2>
-        <Button onClick={handleCopy} variant="outline" size="sm">
-          {copied ? "Copied ✓" : "Copy letter"}
+        <Button onClick={handleCopy} variant="outline" size="sm" className="gap-2">
+          {copied ? (
+            <>
+              <Check className="size-4" />
+              Copied
+            </>
+          ) : (
+            <>
+              <Copy className="size-4" />
+              Copy letter
+            </>
+          )}
         </Button>
       </div>
 

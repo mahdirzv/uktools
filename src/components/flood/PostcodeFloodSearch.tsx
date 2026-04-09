@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { CheckCircle2 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { FloodWarningCard } from "./FloodWarningCard"
@@ -93,8 +94,9 @@ export function PostcodeFloodSearch() {
       {data && (
         <div className="space-y-6">
           {data.warnings.length === 0 ? (
-            <div className="rounded-lg border border-green-300 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-700 dark:bg-green-950/30 dark:text-green-200">
-              ✓ No active flood warnings near {data.postcode}
+            <div className="flex items-center gap-2 rounded-lg border border-green-300 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-700 dark:bg-green-950/30 dark:text-green-200">
+              <CheckCircle2 className="size-4 shrink-0" />
+              <span>No active flood warnings near {data.postcode}</span>
             </div>
           ) : (
             <div className="space-y-3 rounded-xl border bg-card p-4 ring-1 ring-foreground/10 sm:p-5">
@@ -119,8 +121,16 @@ export function PostcodeFloodSearch() {
           )}
 
           <p className="text-xs text-muted-foreground">
-            Data from Environment Agency. Last checked:{" "}
-            {new Date(data.lastUpdated).toLocaleString("en-GB")}
+            Source:{" "}
+            <a
+              href="https://environment.data.gov.uk/flood-monitoring/doc/reference"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2"
+            >
+              Environment Agency flood monitoring
+            </a>
+            {" · "}Last checked: {new Date(data.lastUpdated).toLocaleString("en-GB")}
           </p>
 
           <HomeInsuranceCTA />

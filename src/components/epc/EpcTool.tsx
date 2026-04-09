@@ -259,6 +259,7 @@ export function EpcTool({ className = "" }: { className?: string }) {
   const [record, setRecord]         = useState<EpcRecord | null>(null)
   const [loadingLmk, setLoadingLmk] = useState<string | null>(null)
   const [notConfigured, setNotConfigured] = useState(false)
+  const [checkedAt, setCheckedAt] = useState<string | null>(null)
 
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault()
@@ -267,6 +268,7 @@ export function EpcTool({ className = "" }: { className?: string }) {
     setError(null)
     setProperties(null)
     setRecord(null)
+    setCheckedAt(null)
 
     try {
       const res = await fetch(`/api/epc?address=${encodeURIComponent(query.trim())}`)
@@ -274,6 +276,7 @@ export function EpcTool({ className = "" }: { className?: string }) {
       if (!res.ok) { setError(data.error ?? "Search failed"); return }
       if (!data.configured) { setNotConfigured(true); return }
       setProperties(data.properties ?? [])
+      setCheckedAt(new Date().toISOString())
     } catch {
       setError("Could not reach the EPC service. Please try again.")
     } finally {
@@ -290,6 +293,7 @@ export function EpcTool({ className = "" }: { className?: string }) {
       const data = await res.json()
       if (!res.ok) { setError(data.error ?? "Could not load certificate"); return }
       setRecord(data.record)
+      setCheckedAt(new Date().toISOString())
     } catch {
       setError("Could not load this certificate. Please try again.")
     } finally {
@@ -301,6 +305,20 @@ export function EpcTool({ className = "" }: { className?: string }) {
     return (
       <div className={className}>
         <EpcDetail record={record} onBack={() => setRecord(null)} />
+        {checkedAt && (
+          <p className="text-xs text-muted-foreground">
+            Source:{" "}
+            <a
+              href="https://epc.opendatacommunities.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2"
+            >
+              gov.uk EPC register
+            </a>
+            {" · "}Last checked: {new Date(checkedAt).toLocaleString("en-GB")}
+          </p>
+        )}
       </div>
     )
   }
@@ -391,6 +409,21 @@ export function EpcTool({ className = "" }: { className?: string }) {
               )}
             </button>
           ))}
+
+          {checkedAt && (
+            <p className="text-xs text-muted-foreground">
+              Source:{" "}
+              <a
+                href="https://epc.opendatacommunities.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2"
+              >
+                gov.uk EPC register
+              </a>
+              {" · "}Last checked: {new Date(checkedAt).toLocaleString("en-GB")}
+            </p>
+          )}
         </div>
       )}
 

@@ -37,7 +37,13 @@ function comparisonLabel(category: string, count: number, months: number): React
   return null
 }
 
-export function CrimeBreakdown({ data }: { data: CrimeData }) {
+export function CrimeBreakdown({
+  data,
+  checkedAt,
+}: {
+  data: CrimeData
+  checkedAt: string | null
+}) {
   const maxCount = data.breakdown[0]?.count || 1
 
   return (
@@ -79,8 +85,7 @@ export function CrimeBreakdown({ data }: { data: CrimeData }) {
       {data.latestMonth && (
         <p className="text-xs text-muted-foreground">
           Data covers crimes reported to {formatMonth(data.latestMonth)} — Police UK data
-          typically 2–3 months behind current date.{" "}
-          Source:{" "}
+          typically 2–3 months behind current date. Source:{" "}
           <a
             href="https://data.police.uk"
             target="_blank"
@@ -89,6 +94,11 @@ export function CrimeBreakdown({ data }: { data: CrimeData }) {
           >
             data.police.uk
           </a>
+          {checkedAt && (
+            <>
+              {" · "}Last checked: {new Date(checkedAt).toLocaleString("en-GB")}
+            </>
+          )}
         </p>
       )}
 

@@ -14,6 +14,7 @@ export function CompanySearch() {
   const [loading, setLoading] = useState(false)
   const [loadingReport, setLoadingReport] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [checkedAt, setCheckedAt] = useState<string | null>(null)
 
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault()
@@ -24,6 +25,7 @@ export function CompanySearch() {
     setError(null)
     setReport(null)
     setResults([])
+    setCheckedAt(null)
 
     try {
       const res = await fetch(`/api/company/search?q=${encodeURIComponent(q)}`)
@@ -33,6 +35,7 @@ export function CompanySearch() {
         return
       }
       setResults(data.items ?? [])
+      setCheckedAt(new Date().toISOString())
       if ((data.items ?? []).length === 0) {
         setError("No companies found. Try a different search term.")
       }
@@ -56,6 +59,7 @@ export function CompanySearch() {
       }
       setReport(data)
       setResults([])
+      setCheckedAt(new Date().toISOString())
     } catch {
       setError("Failed to connect. Please try again.")
     } finally {
@@ -130,6 +134,20 @@ export function CompanySearch() {
               </button>
             ))}
           </div>
+          {checkedAt && (
+            <p className="text-xs text-muted-foreground">
+              Source:{" "}
+              <a
+                href="https://developer.company-information.service.gov.uk/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2"
+              >
+                Companies House API
+              </a>
+              {" · "}Last checked: {new Date(checkedAt).toLocaleString("en-GB")}
+            </p>
+          )}
         </section>
       )}
 
@@ -153,6 +171,20 @@ export function CompanySearch() {
             ← Search again
           </button>
           <CompanyResult report={report} />
+          {checkedAt && (
+            <p className="text-xs text-muted-foreground">
+              Source:{" "}
+              <a
+                href="https://developer.company-information.service.gov.uk/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2"
+              >
+                Companies House API
+              </a>
+              {" · "}Last checked: {new Date(checkedAt).toLocaleString("en-GB")}
+            </p>
+          )}
         </div>
       )}
     </div>

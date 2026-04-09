@@ -25,6 +25,7 @@ export function PostcodeSearch() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [data, setData] = useState<CrimeData | null>(null)
+  const [checkedAt, setCheckedAt] = useState<string | null>(null)
 
   async function handleSearch(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -34,6 +35,7 @@ export function PostcodeSearch() {
     setLoading(true)
     setError("")
     setData(null)
+    setCheckedAt(null)
 
     try {
       const res = await fetch(
@@ -52,6 +54,7 @@ export function PostcodeSearch() {
       }
 
       setData(json)
+      setCheckedAt(new Date().toISOString())
     } catch {
       setError("Failed to fetch crime data. Please try again.")
     } finally {
@@ -89,7 +92,7 @@ export function PostcodeSearch() {
 
       {data && (
         <>
-          <CrimeBreakdown data={data} />
+          <CrimeBreakdown data={data} checkedAt={checkedAt} />
           <HomeInsuranceCTA />
         </>
       )}
