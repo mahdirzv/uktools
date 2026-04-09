@@ -23,30 +23,44 @@ export function CostBreakdownTable({ bands, total }: { bands: StampDutyBand[]; t
   }
 
   return (
-    <div className="space-y-3">
-      <div className="overflow-x-auto">
+    <div className="space-y-4">
+      <div className="overflow-x-auto rounded-lg border border-border/70">
         <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b text-left text-muted-foreground">
-              <th className="pb-2 pr-4 font-medium">Band</th>
-              <th className="pb-2 pr-4 text-right font-medium">Rate</th>
-              <th className="pb-2 pr-4 text-right font-medium">Taxable</th>
-              <th className="pb-2 text-right font-medium">Tax</th>
+          <thead className="bg-muted/40">
+            <tr className="text-left text-muted-foreground">
+              <th className="px-3 py-2.5 font-medium">Band</th>
+              <th className="px-3 py-2.5 text-right font-medium">Rate</th>
+              <th className="px-3 py-2.5 text-right font-medium">Taxable</th>
+              <th className="px-3 py-2.5 text-right font-medium">Tax</th>
             </tr>
           </thead>
           <tbody>
-            {bands.map((band, i) => (
-              <tr key={i} className="border-b last:border-0">
-                <td className="py-2 pr-4">{formatBandRange(band.from, band.to)}</td>
-                <td className="py-2 pr-4 text-right">{formatPercent(band.rate)}</td>
-                <td className="py-2 pr-4 text-right">{formatCurrency(band.taxable)}</td>
-                <td className="py-2 text-right">{formatCurrency(band.tax)}</td>
-              </tr>
-            ))}
+            {bands.map((band, i) => {
+              const taxed = band.tax > 0
+
+              return (
+                <tr
+                  key={i}
+                  className={taxed ? "border-t bg-foreground/[0.015]" : "border-t text-muted-foreground"}
+                >
+                  <td className="px-3 py-2.5">{formatBandRange(band.from, band.to)}</td>
+                  <td className="px-3 py-2.5 text-right">{formatPercent(band.rate)}</td>
+                  <td className="px-3 py-2.5 text-right">{formatCurrency(band.taxable)}</td>
+                  <td className={taxed ? "px-3 py-2.5 text-right font-medium" : "px-3 py-2.5 text-right"}>
+                    {formatCurrency(band.tax)}
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>
-      <div className="flex items-center justify-between border-t pt-3 font-medium">
+
+      <p className="text-xs text-muted-foreground">
+        You only pay each rate on the portion of the property price that falls within that band.
+      </p>
+
+      <div className="flex items-center justify-between border-t pt-3 text-sm font-medium">
         <span>Total Stamp Duty (SDLT)</span>
         <span className="text-base">{formatCurrency(total)}</span>
       </div>

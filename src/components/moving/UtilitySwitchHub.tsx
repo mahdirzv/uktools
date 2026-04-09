@@ -58,23 +58,37 @@ const CARDS: AffiliateCard[] = [
 
 export function UtilitySwitchHub() {
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-5 sm:gap-6">
       {CARDS.map((card) => (
-        <Card key={card.service} className={card.pending ? "opacity-60" : ""}>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <CardTitle>{card.service}</CardTitle>
+        <Card
+          key={card.service}
+          className={
+            card.pending
+              ? "border-border/70 bg-muted/20"
+              : "border-border/70 bg-card transition-colors duration-200 hover:border-primary/25 hover:bg-card/95"
+          }
+        >
+          <CardHeader className="space-y-3">
+            <div className="flex items-start justify-between gap-3">
+              <CardTitle className="text-base font-semibold leading-snug sm:text-lg">
+                {card.service}
+              </CardTitle>
               {card.pending && <Badge variant="secondary">Coming soon</Badge>}
             </div>
-            <CardDescription>{card.description}</CardDescription>
+            <CardDescription className="text-sm leading-relaxed text-muted-foreground">
+              {card.description}
+            </CardDescription>
           </CardHeader>
-          <CardFooter>
+
+          <CardFooter className="pt-1">
             {card.pending ? (
-              <Button variant="outline" disabled>
+              <Button variant="outline" disabled className="w-full justify-between">
                 {card.cta}
+                <ExternalLinkIcon className="size-4 opacity-60" />
               </Button>
             ) : (
               <Button
+                className="w-full justify-between"
                 render={
                   <a
                     href={awinLink(card.merchantId, card.destination)}
@@ -84,7 +98,7 @@ export function UtilitySwitchHub() {
                 }
               >
                 {card.cta}
-                <ExternalLinkIcon />
+                <ExternalLinkIcon className="size-4" />
               </Button>
             )}
           </CardFooter>
