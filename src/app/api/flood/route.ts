@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from "next/server"
-import { geocodeUkPostcode } from "@/lib/postcode-geocode"
+
+interface PostcodeResult {
+  result: {
+    latitude: number
+    longitude: number
+  } | null
+}
 
 interface EAWarning {
   description: string
@@ -63,16 +69,19 @@ export async function GET(req: NextRequest) {
   const clean = postcode.replace(/\s+/g, "").toUpperCase()
 
   try {
-    const coordinates = await geocodeUkPostcode(clean, 10000)
+    const pcJson = await fetchJson<PostcodeResult>(
+      `https://api.postcodes.io/postcodes/${clean}`,
+      10000
+    )
 
-    if (!coordinates) {
+    if (!pcJson.result) {
       return NextResponse.json(
         { error: "Postcode not found. Please check and try again." },
         { status: 404 }
       )
     }
 
-    const { latitude: lat, longitude: lng } = coordinates
+    const { latitude: lat, longitude: lng } = pcJson.result
 
     const [warningsResult, stationsResult] = await Promise.allSettled([
       fetchJson<{ items?: EAWarning[] }>(
@@ -149,16 +158,7 @@ export async function GET(req: NextRequest) {
       gauges: gauges.filter(Boolean),
       lastUpdated: new Date().toISOString(),
     })
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : "Unknown error"
-
-    if (msg.includes("not configured")) {
-      return NextResponse.json(
-        { error: "Postcode lookup service is not configured" },
-        { status: 503 }
-      )
-    }
-
+  } catch {
     return NextResponse.json(
       { error: "Failed to fetch flood data. Please try again." },
       { status: 500 }
