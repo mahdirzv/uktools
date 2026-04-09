@@ -30,7 +30,24 @@ export default function CrimePage() {
           </p>
         </div>
       </div>
-      <PostcodeSearch />
+
+      <div className="mt-6 grid gap-3 text-sm sm:grid-cols-3">
+        <InfoChip text="Official Police UK data" />
+        <InfoChip text="Category-by-category trends" />
+        <InfoChip text="Fast postcode lookup" />
+      </div>
+
+      <div className="mt-8">
+        <PostcodeSearch />
+      </div>
+    </div>
+  )
+}
+
+function InfoChip({ text }: { text: string }) {
+  return (
+    <div className="rounded-lg border border-border/70 bg-card px-3 py-2.5 text-muted-foreground">
+      {text}
     </div>
   )
 }

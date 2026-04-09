@@ -30,7 +30,24 @@ export default function SubscriptionsPage() {
           </p>
         </div>
       </div>
-      <SubscriptionList />
+
+      <div className="mt-6 grid gap-3 text-sm sm:grid-cols-3">
+        <InfoChip text="Monthly spend visibility" />
+        <InfoChip text="Renewal reminders" />
+        <InfoChip text="Quick cancel prioritisation" />
+      </div>
+
+      <div className="mt-8">
+        <SubscriptionList />
+      </div>
+    </div>
+  )
+}
+
+function InfoChip({ text }: { text: string }) {
+  return (
+    <div className="rounded-lg border border-border/70 bg-card px-3 py-2.5 text-muted-foreground">
+      {text}
     </div>
   )
 }

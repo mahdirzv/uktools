@@ -30,7 +30,24 @@ export default function FloodPage() {
           </p>
         </div>
       </div>
-      <PostcodeFloodSearch />
+
+      <div className="mt-6 grid gap-3 text-sm sm:grid-cols-3">
+        <InfoChip text="Environment Agency flood warnings" />
+        <InfoChip text="Live river gauge levels" />
+        <InfoChip text="Quick postcode risk check" />
+      </div>
+
+      <div className="mt-8">
+        <PostcodeFloodSearch />
+      </div>
+    </div>
+  )
+}
+
+function InfoChip({ text }: { text: string }) {
+  return (
+    <div className="rounded-lg border border-border/70 bg-card px-3 py-2.5 text-muted-foreground">
+      {text}
     </div>
   )
 }

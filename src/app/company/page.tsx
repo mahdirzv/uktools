@@ -32,7 +32,24 @@ export default function CompanyPage() {
           </p>
         </div>
       </div>
-      <CompanySearch />
+
+      <div className="mt-6 grid gap-3 text-sm sm:grid-cols-3">
+        <InfoChip text="Official Companies House data" />
+        <InfoChip text="Plain-English trust signals" />
+        <InfoChip text="No sign-up required" />
+      </div>
+
+      <div className="mt-8">
+        <CompanySearch />
+      </div>
+    </div>
+  )
+}
+
+function InfoChip({ text }: { text: string }) {
+  return (
+    <div className="rounded-lg border border-border/70 bg-card px-3 py-2.5 text-muted-foreground">
+      {text}
     </div>
   )
 }

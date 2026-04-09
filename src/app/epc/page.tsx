@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { EpcTool } from "@/components/epc/EpcTool"
-import { VideoPlayer } from "@/components/shared/VideoPlayer"
 
 export const metadata: Metadata = {
   title: "EPC Rating Checker UK 2026 — Energy Performance Certificate Lookup",
@@ -33,25 +32,34 @@ export default function EpcPage() {
         </div>
       </div>
 
-      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
-        <span>England &amp; Wales only</span>
-        <span>·</span>
-        <span>
-          Data from{" "}
-          <a
-            href="https://epc.opendatacommunities.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline underline-offset-2 hover:text-foreground"
-          >
-            gov.uk EPC register
-          </a>
-        </span>
-        <span>·</span>
-        <span>Updated to Feb 2026</span>
+      <div className="mt-6 grid gap-3 text-sm sm:grid-cols-3">
+        <InfoChip text="England & Wales only" />
+        <InfoChip text="Official EPC register data" />
+        <InfoChip text="Updated to Feb 2026" />
       </div>
 
+      <p className="mt-3 text-xs text-muted-foreground">
+        Data from{" "}
+        <a
+          href="https://epc.opendatacommunities.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline underline-offset-2 hover:text-foreground"
+        >
+          gov.uk EPC register
+        </a>
+        .
+      </p>
+
       <EpcTool className="mt-8" />
+    </div>
+  )
+}
+
+function InfoChip({ text }: { text: string }) {
+  return (
+    <div className="rounded-lg border border-border/70 bg-card px-3 py-2.5 text-muted-foreground">
+      {text}
     </div>
   )
 }

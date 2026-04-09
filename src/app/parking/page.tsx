@@ -31,13 +31,23 @@ export default function ParkingPage() {
         </div>
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-4 text-sm text-muted-foreground">
-        <span>✓ Based on UK Traffic Management Act 2004</span>
-        <span>✓ Works for all English and Welsh councils</span>
-        <span>✓ Used for informal challenges (28-day window from issue)</span>
+      <div className="mt-6 grid gap-3 text-sm sm:grid-cols-3">
+        <InfoChip text="Based on UK Traffic Management Act 2004" />
+        <InfoChip text="Works for all English and Welsh councils" />
+        <InfoChip text="Built for informal challenges (28-day window)" />
       </div>
 
-      <ParkingWizard />
+      <div className="mt-8">
+        <ParkingWizard />
+      </div>
+    </div>
+  )
+}
+
+function InfoChip({ text }: { text: string }) {
+  return (
+    <div className="rounded-lg border border-border/70 bg-card px-3 py-2.5 text-muted-foreground">
+      {text}
     </div>
   )
 }
