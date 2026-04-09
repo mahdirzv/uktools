@@ -45,45 +45,45 @@ export default function FreelancePage() {
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Card>
-            <CardHeader>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Card className="border-border/70 bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-sm">
+            <CardHeader className="space-y-3">
               <div className="flex items-center gap-2">
                 <Calculator className="size-5 text-primary" />
-                <CardTitle>Day Rate Calculator</CardTitle>
+                <CardTitle className="text-lg">Day Rate Calculator</CardTitle>
               </div>
-              <CardDescription>
+              <CardDescription className="leading-relaxed">
                 Find out what to charge based on your target salary, accounting
                 for NI, pension, and downtime.
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" render={<Link href="/freelance/day-rate" />}>
+              <Button className="w-full justify-between" render={<Link href="/freelance/day-rate" />}>
                 Calculate your day rate
               </Button>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
+          <Card className="border-border/70 bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-sm">
+            <CardHeader className="space-y-3">
               <div className="flex items-center gap-2">
                 <Scale className="size-5 text-primary" />
-                <CardTitle>IR35 Checker</CardTitle>
+                <CardTitle className="text-lg">IR35 Checker</CardTitle>
               </div>
-              <CardDescription>
+              <CardDescription className="leading-relaxed">
                 Find out your IR35 status with plain-English questions based on
                 the three key tests from case law.
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" render={<Link href="/freelance/ir35" />}>
+              <Button className="w-full justify-between" render={<Link href="/freelance/ir35" />}>
                 Check your IR35 status
               </Button>
             </CardContent>
           </Card>
         </div>
 
-        <div className="grid gap-4 text-center sm:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-3">
           <Stat value="4.4 million" label="self-employed people in the UK" />
           <Stat
             value="IR35 reform"
@@ -168,9 +168,9 @@ export default function FreelancePage() {
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (
-    <div className="flex flex-col gap-1 rounded-xl bg-card p-4 ring-1 ring-foreground/10">
-      <span className="text-lg font-semibold">{value}</span>
-      <span className="text-xs text-muted-foreground">{label}</span>
+    <div className="rounded-lg border border-border/70 bg-card px-4 py-3">
+      <p className="text-base font-semibold tracking-tight">{value}</p>
+      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{label}</p>
     </div>
   )
 }

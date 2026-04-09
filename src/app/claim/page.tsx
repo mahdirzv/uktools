@@ -46,59 +46,63 @@ export default function ClaimPage() {
             className="mt-8"
           />
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2">
-            <Card>
-              <CardHeader>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2">
+            <Card className="border-border/70 bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-sm">
+              <CardHeader className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <CreditCard className="size-5" />
+                  <CreditCard className="size-5 text-primary" />
                   <Badge variant="secondary">Credit card</Badge>
                 </div>
                 <CardTitle className="text-lg">Section 75 claim</CardTitle>
-                <CardDescription>
-                  Paid by credit card, £100–£30,000. Your card provider is
-                  legally liable.
+                <CardDescription className="leading-relaxed">
+                  Paid by credit card, £100–£30,000. Your card provider is legally liable.
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Button render={<Link href="/claim/s75" />} className="w-full">
-                  Start claim
+                <Button render={<Link href="/claim/s75" />} className="w-full justify-between">
+                  Start Section 75 claim
                 </Button>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
+            <Card className="border-border/70 bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-sm">
+              <CardHeader className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <Wallet className="size-5" />
+                  <Wallet className="size-5 text-primary" />
                   <Badge variant="secondary">Debit or credit</Badge>
                 </div>
                 <CardTitle className="text-lg">Chargeback</CardTitle>
-                <CardDescription>
-                  Debit card, or credit card under £100. Request a reversal
-                  through your bank.
+                <CardDescription className="leading-relaxed">
+                  Debit card, or credit card under £100. Request a reversal through your bank.
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Button render={<Link href="/claim/chargeback" />} variant="outline" className="w-full">
-                  Start claim
+                <Button render={<Link href="/claim/chargeback" />} variant="outline" className="w-full justify-between">
+                  Start chargeback claim
                 </Button>
               </CardContent>
             </Card>
           </div>
 
-          <div className="mt-12 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-muted-foreground">
-            <span className="flex items-center gap-2">
-              <Check className="size-4 text-foreground" />
-              Based on Consumer Credit Act 1974
-            </span>
-            <span className="flex items-center gap-2">
-              <Check className="size-4 text-foreground" />
-              Works against any UK credit card issuer
-            </span>
-            <span className="flex items-center gap-2">
-              <Check className="size-4 text-foreground" />
-              If refused, escalate free to the Financial Ombudsman
-            </span>
+          <div className="mt-12 grid gap-3 text-sm sm:grid-cols-3">
+            <div className="rounded-lg border border-border/70 bg-card px-3 py-2.5 text-muted-foreground">
+              <span className="flex items-start gap-2">
+                <Check className="mt-0.5 size-4 text-foreground" />
+                Based on Consumer Credit Act 1974
+              </span>
+            </div>
+            <div className="rounded-lg border border-border/70 bg-card px-3 py-2.5 text-muted-foreground">
+              <span className="flex items-start gap-2">
+                <Check className="mt-0.5 size-4 text-foreground" />
+                Works against any UK credit card issuer
+              </span>
+            </div>
+            <div className="rounded-lg border border-border/70 bg-card px-3 py-2.5 text-muted-foreground">
+              <span className="flex items-start gap-2">
+                <Check className="mt-0.5 size-4 text-foreground" />
+                If refused, escalate free to the Financial Ombudsman
+              </span>
+            </div>
           </div>
         </section>
 
