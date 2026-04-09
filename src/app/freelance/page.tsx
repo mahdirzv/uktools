@@ -24,23 +24,25 @@ export const metadata: Metadata = {
 
 export default function FreelancePage() {
   return (
-    <div className="flex flex-col flex-1 items-center bg-zinc-50 font-sans">
-      <main className="flex w-full max-w-2xl flex-col gap-12 px-4 py-16 sm:px-6">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
-        >
-          <ArrowLeft className="size-3.5" />
-          Back to UK Tools
-        </Link>
+    <div className="flex flex-col flex-1 items-center">
+      <main className="tool-page-padding flex w-full max-w-[720px] flex-col gap-12">
+        <div className="space-y-4">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <ArrowLeft className="size-3.5" />
+            Back to UK Tools
+          </Link>
 
-        <div className="flex flex-col gap-3 text-center">
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Free tools for UK freelancers and contractors
-          </h1>
-          <p className="text-lg text-muted-foreground">
-            Day rate calculator and IR35 checker — built for UK tax rules.
-          </p>
+          <div className="flex flex-col gap-3">
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              Free tools for UK freelancers and contractors
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              Day rate calculator and IR35 checker — built for UK tax rules.
+            </p>
+          </div>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">

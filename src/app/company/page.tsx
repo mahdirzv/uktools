@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function CompanyPage() {
   return (
-    <div className="mx-auto w-full max-w-[720px] px-4 py-10 sm:py-16">
+    <div className="mx-auto w-full max-w-[720px] tool-page-padding">
       <div className="space-y-4">
         <Link
           href="/"

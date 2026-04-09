@@ -128,3 +128,13 @@
     @apply font-sans;
   }
 }
+
+@layer components {
+  .tool-page-x {
+    @apply px-4 sm:px-6;
+  }
+
+  .tool-page-padding {
+    @apply px-4 py-16 sm:px-6;
+  }
+}

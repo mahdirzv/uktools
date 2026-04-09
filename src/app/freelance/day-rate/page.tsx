@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 
 export default function DayRatePage() {
   return (
-    <div className="flex flex-col flex-1 items-center bg-zinc-50 font-sans">
-      <main className="flex w-full max-w-2xl flex-col gap-8 px-4 py-16 sm:px-6">
+    <div className="flex flex-col flex-1 items-center">
+      <main className="tool-page-padding flex w-full max-w-[720px] flex-col gap-8">
         <div>
           <Link
             href="/freelance"

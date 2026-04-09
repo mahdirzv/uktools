@@ -18,25 +18,25 @@ export default function ClaimPage() {
   return (
     <div className="flex flex-1 flex-col">
       <main className="flex-1">
-        <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
-          <Link
-            href="/"
-            className="mb-8 inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <ArrowLeft className="size-3.5" />
-            Back to UK Tools
-          </Link>
+        <section className="tool-page-padding mx-auto max-w-[720px]">
+          <div className="space-y-4">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <ArrowLeft className="size-3.5" />
+              Back to UK Tools
+            </Link>
 
-          <div className="text-center">
-            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              Get your money back.
-              <br />
-              Draft your claim letter in 2 minutes.
-            </h1>
-            <p className="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">
-              Section 75 and chargeback claims — the UK&apos;s most underused
-              consumer rights, made simple.
-            </p>
+            <div>
+              <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+                Get your money back. Draft your claim letter in 2 minutes.
+              </h1>
+              <p className="mt-3 max-w-xl text-lg text-muted-foreground">
+                Section 75 and chargeback claims — the UK&apos;s most underused
+                consumer rights, made simple.
+              </p>
+            </div>
           </div>
 
           <VideoPlayer
@@ -104,7 +104,7 @@ export default function ClaimPage() {
 
         <Separator />
 
-        <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
+        <section className="tool-page-padding mx-auto max-w-[720px]">
           <h2 className="mb-8 text-xl font-semibold">
             Frequently asked questions
           </h2>
@@ -113,7 +113,7 @@ export default function ClaimPage() {
       </main>
 
       <footer className="border-t py-6 text-center text-xs text-muted-foreground">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6">
+        <div className="tool-page-x mx-auto max-w-[720px]">
           This tool provides general legal information, not legal advice. It
           does not constitute a legal advice relationship. For complex disputes,
           consult a solicitor.

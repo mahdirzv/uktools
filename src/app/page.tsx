@@ -123,37 +123,41 @@ export default function Home() {
             <Link
               key={tool.href}
               href={tool.href}
-              className="group block rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+              className="group block rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-primary/35"
             >
               <Card
                 size="sm"
-                className="h-full border border-border/70 py-0 ring-0 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-border hover:bg-accent/30 hover:shadow-sm motion-reduce:transform-none motion-reduce:transition-none"
+                className="flex h-full flex-col rounded-2xl border border-border/65 bg-card/95 py-0 shadow-[0_1px_2px_rgb(0_0_0_/_0.04)] ring-0 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-[0_14px_24px_rgb(0_0_0_/_0.08)] motion-reduce:transform-none motion-reduce:transition-none"
               >
-                <CardHeader className="gap-2 px-4 pt-4 sm:px-5 sm:pt-5">
+                <CardHeader className="gap-3 p-5">
                   <div className="flex items-start gap-3">
-                    <span className="mt-0.5 shrink-0 rounded-xl bg-primary/10 p-2 text-primary">
+                    <span className="mt-0.5 shrink-0 rounded-xl border border-primary/10 bg-primary/10 p-2 text-primary shadow-sm transition-transform duration-200 group-hover:scale-105 motion-reduce:transform-none">
                       <Icon className="size-6 sm:size-7" />
                     </span>
                     <div className="min-w-0">
-                      <CardTitle className="text-base font-semibold leading-snug sm:text-lg">
+                      <CardTitle className="text-base font-semibold leading-tight tracking-tight sm:text-lg">
                         {tool.title}
                       </CardTitle>
                       <span className="mt-1 block text-sm text-muted-foreground sm:hidden">
                         {tool.tags[0]}
                       </span>
                     </div>
-                    <span className="ml-auto pt-0.5 text-muted-foreground/45 transition-colors group-hover:text-muted-foreground sm:hidden">
-                      →
+                    <span className="ml-auto rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground transition-colors group-hover:bg-primary/10 group-hover:text-primary sm:hidden">
+                      Open
                     </span>
                   </div>
-                  <CardDescription className="hidden text-sm leading-relaxed text-muted-foreground sm:block sm:line-clamp-2">
+                  <CardDescription className="hidden text-sm leading-6 text-muted-foreground sm:block sm:line-clamp-3">
                     {tool.description}
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="hidden px-4 pb-4 sm:block sm:px-5 sm:pb-5">
-                  <div className="flex flex-wrap gap-1.5">
+                <CardContent className="mt-auto hidden p-5 pt-4 sm:block">
+                  <div className="flex flex-wrap gap-2">
                     {tool.tags.map((tag) => (
-                      <Badge key={tag} variant="outline" className="bg-background/70">
+                      <Badge
+                        key={tag}
+                        variant="outline"
+                        className="rounded-full border border-border/70 bg-muted/60 px-2.5 py-1 text-[11px] font-medium tracking-tight text-foreground/75"
+                      >
                         {tag}
                       </Badge>
                     ))}

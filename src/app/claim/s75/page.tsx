@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function Section75Page() {
   return (
-    <div className="mx-auto w-full max-w-2xl px-4 pt-8 sm:px-6 sm:pt-10">
+    <div className="mx-auto w-full max-w-[720px] tool-page-padding">
       <Link
         href="/claim"
         className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"

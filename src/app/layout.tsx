@@ -40,7 +40,7 @@ export default function RootLayout({
             </div>
           </div>
         </header>
-        <div className="flex flex-1 flex-col">{children}</div>
+        <div className="flex flex-1 flex-col bg-zinc-50 font-sans">{children}</div>
         <footer className="border-t py-6">
           <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-4 text-xs text-muted-foreground sm:px-6">
             <span>UK Tools — free calculators for UK consumers</span>
