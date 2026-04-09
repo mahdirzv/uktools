@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { ArrowLeft, Calculator, Scale } from "lucide-react"
 import {
   Card,
   CardContent,
@@ -14,7 +15,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { Calculator, Scale } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "UK Freelance Day Rate Calculator & IR35 Checker 2026",
@@ -26,6 +26,14 @@ export default function FreelancePage() {
   return (
     <div className="flex flex-col flex-1 items-center bg-zinc-50 font-sans">
       <main className="flex w-full max-w-2xl flex-col gap-12 px-4 py-16 sm:px-6">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <ArrowLeft className="size-3.5" />
+          Back to UK Tools
+        </Link>
+
         <div className="flex flex-col gap-3 text-center">
           <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
             Free tools for UK freelancers and contractors
