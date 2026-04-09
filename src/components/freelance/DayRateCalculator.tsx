@@ -164,18 +164,14 @@ export function DayRateCalculator() {
                     }
                     className="flex gap-4"
                   >
-                    <div className="flex items-center gap-2">
-                      <RadioGroupItem value="outside" />
-                      <Label htmlFor="ir35-outside" className="font-normal">
-                        Outside IR35 (Ltd Co)
-                      </Label>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <RadioGroupItem value="inside" />
-                      <Label htmlFor="ir35-inside" className="font-normal">
-                        Inside IR35 (on payroll)
-                      </Label>
-                    </div>
+                    <Label htmlFor="ir35-outside" className="flex cursor-pointer items-center gap-2 rounded-md px-1 py-0.5 font-normal">
+                      <RadioGroupItem id="ir35-outside" value="outside" />
+                      <span>Outside IR35 (Ltd Co)</span>
+                    </Label>
+                    <Label htmlFor="ir35-inside" className="flex cursor-pointer items-center gap-2 rounded-md px-1 py-0.5 font-normal">
+                      <RadioGroupItem id="ir35-inside" value="inside" />
+                      <span>Inside IR35 (on payroll)</span>
+                    </Label>
                   </RadioGroup>
                 </div>
 

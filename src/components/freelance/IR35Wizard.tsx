@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useId, useState } from "react"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
@@ -174,11 +174,13 @@ function Section({
 }
 
 function RadioOption({ value, label }: { value: string; label: string }) {
+  const id = useId()
+
   return (
-    <div className="flex items-start gap-2">
-      <RadioGroupItem value={value} className="mt-0.5" />
-      <Label className="font-normal leading-snug">{label}</Label>
-    </div>
+    <Label htmlFor={id} className="flex cursor-pointer items-start gap-2 rounded-md px-1 py-0.5 font-normal leading-snug">
+      <RadioGroupItem id={id} value={value} className="mt-0.5" />
+      <span>{label}</span>
+    </Label>
   )
 }
 
@@ -199,6 +201,8 @@ function BinaryQuestion({
 }) {
   const yesValue: BinaryAnswer = inverted ? "inside" : "outside"
   const noValue: BinaryAnswer = inverted ? "outside" : "inside"
+  const yesId = useId()
+  const noId = useId()
 
   return (
     <div className="flex flex-col gap-2">
@@ -208,14 +212,14 @@ function BinaryQuestion({
         onValueChange={(v) => onChange(v as BinaryAnswer)}
         className="flex gap-4"
       >
-        <div className="flex items-center gap-2">
-          <RadioGroupItem value={yesValue} />
-          <Label className="font-normal">{yesLabel}</Label>
-        </div>
-        <div className="flex items-center gap-2">
-          <RadioGroupItem value={noValue} />
-          <Label className="font-normal">{noLabel}</Label>
-        </div>
+        <Label htmlFor={yesId} className="flex cursor-pointer items-center gap-2 rounded-md px-1 py-0.5 font-normal">
+          <RadioGroupItem id={yesId} value={yesValue} />
+          <span>{yesLabel}</span>
+        </Label>
+        <Label htmlFor={noId} className="flex cursor-pointer items-center gap-2 rounded-md px-1 py-0.5 font-normal">
+          <RadioGroupItem id={noId} value={noValue} />
+          <span>{noLabel}</span>
+        </Label>
       </RadioGroup>
     </div>
   )

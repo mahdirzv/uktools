@@ -1,8 +1,5 @@
 import { awinLink } from "@/lib/awin"
-import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { ExternalLinkIcon } from "lucide-react"
+import { OfferCard } from "@/components/shared/OfferCard"
 
 interface AffiliateCard {
   service: string
@@ -60,49 +57,19 @@ export function UtilitySwitchHub() {
   return (
     <div className="grid gap-5 sm:gap-6">
       {CARDS.map((card) => (
-        <Card
+        <OfferCard
           key={card.service}
+          title={card.service}
+          description={card.description}
+          ctaLabel={card.cta}
+          href={awinLink(card.merchantId, card.destination)}
+          pending={card.pending}
           className={
             card.pending
-              ? "border-border/70 bg-muted/20"
-              : "border-border/70 bg-card transition-colors duration-200 hover:border-primary/25 hover:bg-card/95"
+              ? "bg-muted/20"
+              : "transition-colors duration-200 hover:border-primary/25 hover:bg-card/95"
           }
-        >
-          <CardHeader className="space-y-3">
-            <div className="flex items-start justify-between gap-3">
-              <CardTitle className="text-base font-semibold leading-snug sm:text-lg">
-                {card.service}
-              </CardTitle>
-              {card.pending && <Badge variant="secondary">Coming soon</Badge>}
-            </div>
-            <CardDescription className="text-sm leading-relaxed text-muted-foreground">
-              {card.description}
-            </CardDescription>
-          </CardHeader>
-
-          <CardFooter className="pt-1">
-            {card.pending ? (
-              <Button variant="outline" disabled className="w-full justify-between">
-                {card.cta}
-                <ExternalLinkIcon className="size-4 opacity-60" />
-              </Button>
-            ) : (
-              <Button
-                className="w-full justify-between"
-                render={
-                  <a
-                    href={awinLink(card.merchantId, card.destination)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  />
-                }
-              >
-                {card.cta}
-                <ExternalLinkIcon className="size-4" />
-              </Button>
-            )}
-          </CardFooter>
-        </Card>
+        />
       ))}
     </div>
   )
