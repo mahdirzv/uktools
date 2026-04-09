@@ -73,11 +73,11 @@ export function CompanyResult({ report }: { report: CompanyReport }) {
       {filings.length > 0 && (
         <div className="flex flex-col gap-3">
           <h3 className="text-sm font-semibold">Recent Filings</h3>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 rounded-xl border bg-card p-2 ring-1 ring-foreground/5">
             {filings.map((filing, i) => (
               <div
                 key={i}
-                className="flex items-start justify-between gap-2 rounded-lg border p-3 text-sm"
+                className="flex items-start justify-between gap-2 rounded-lg border bg-background p-3 text-sm"
               >
                 <span>{filing.description ?? filing.type}</span>
                 <span className="shrink-0 text-xs text-muted-foreground">

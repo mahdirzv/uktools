@@ -104,25 +104,27 @@ export function ParkingWizard() {
 
   return (
     <div className="mt-8 space-y-6">
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        {[1, 2, 3, 4].map((s) => (
-          <span
-            key={s}
-            className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-medium ${
-              step === s
-                ? "bg-foreground text-background"
-                : step > s
-                  ? "bg-muted text-muted-foreground line-through"
-                  : "border text-muted-foreground"
-            }`}
-          >
-            {s}
-          </span>
-        ))}
+      <div className="rounded-xl border bg-card p-3 ring-1 ring-foreground/10">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          {[1, 2, 3, 4].map((s) => (
+            <span
+              key={s}
+              className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-medium ${
+                step === s
+                  ? "bg-foreground text-background"
+                  : step > s
+                    ? "bg-muted text-muted-foreground line-through"
+                    : "border text-muted-foreground"
+              }`}
+            >
+              {s}
+            </span>
+          ))}
+        </div>
       </div>
 
       {step === 1 && (
-        <div className="space-y-4">
+        <div className="space-y-4 rounded-xl border bg-card p-4 ring-1 ring-foreground/10 sm:p-5">
           <h2 className="font-semibold">Step 1 — PCN details</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-1.5">
@@ -215,7 +217,7 @@ export function ParkingWizard() {
       )}
 
       {step === 2 && (
-        <div className="space-y-4">
+        <div className="space-y-4 rounded-xl border bg-card p-4 ring-1 ring-foreground/10 sm:p-5">
           <h2 className="font-semibold">Step 2 — What type of PCN?</h2>
           <div className="space-y-3">
             {[
@@ -269,7 +271,7 @@ export function ParkingWizard() {
       )}
 
       {step === 3 && (
-        <div className="space-y-4">
+        <div className="space-y-4 rounded-xl border bg-card p-4 ring-1 ring-foreground/10 sm:p-5">
           <h2 className="font-semibold">Step 3 — Grounds for appeal</h2>
           <p className="text-sm text-muted-foreground">
             Select all that apply. Each will generate a paragraph in your
@@ -314,7 +316,7 @@ export function ParkingWizard() {
       )}
 
       {step === 4 && (
-        <div className="space-y-4">
+        <div className="space-y-4 rounded-xl border bg-card p-4 ring-1 ring-foreground/10 sm:p-5">
           <h2 className="font-semibold">Step 4 — What happened?</h2>
           <p className="text-sm text-muted-foreground">
             Briefly describe what happened in your own words. This will appear

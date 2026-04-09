@@ -316,21 +316,27 @@ export function EpcTool({ className = "" }: { className?: string }) {
   return (
     <div className={`space-y-6 ${className}`}>
       {/* Search */}
-      <form onSubmit={handleSearch} className="flex gap-2">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
-          <Input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Enter address or postcode — e.g. M50 3SE or 10 Downing Street London"
-            className="pl-9"
-            disabled={loading}
-          />
-        </div>
-        <Button type="submit" disabled={loading || !query.trim()}>
-          {loading ? "Searching…" : "Look up EPC"}
-        </Button>
-      </form>
+      <section className="rounded-xl border bg-card p-4 ring-1 ring-foreground/10 sm:p-5">
+        <p className="text-sm font-medium">Search EPC records</p>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Enter a postcode or full property address.
+        </p>
+        <form onSubmit={handleSearch} className="mt-4 flex flex-col gap-2 sm:flex-row">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
+            <Input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Enter address or postcode — e.g. M50 3SE or 10 Downing Street London"
+              className="pl-9"
+              disabled={loading}
+            />
+          </div>
+          <Button type="submit" disabled={loading || !query.trim()}>
+            {loading ? "Searching…" : "Look up EPC"}
+          </Button>
+        </form>
+      </section>
 
       {notConfigured && (
         <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
@@ -350,7 +356,7 @@ export function EpcTool({ className = "" }: { className?: string }) {
 
       {/* Results list */}
       {properties !== null && (
-        <div className="space-y-3">
+        <div className="space-y-3 rounded-xl border bg-card p-4 ring-1 ring-foreground/10 sm:p-5">
           <p className="text-sm text-muted-foreground">
             {properties.length === 0
               ? "No EPC records found. Try a different postcode or address."

@@ -29,7 +29,7 @@ export function TrustSignals({
   return (
     <div className="flex flex-col gap-3">
       <h3 className="text-sm font-semibold">Trust Signals</h3>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 rounded-xl border bg-card p-2 ring-1 ring-foreground/5">
         {(["red", "amber", "green"] as const).map((level) =>
           grouped[level].map((signal, i) => {
             const Icon = ICON_MAP[level]

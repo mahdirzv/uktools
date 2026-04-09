@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 
 export function HomeInsuranceCTA() {
   return (
-    <div className="rounded-xl border p-5 opacity-60">
+    <div className="rounded-xl border border-primary/20 bg-primary/[0.02] p-5 opacity-70">
       <div className="flex items-center gap-2">
         <h3 className="font-semibold">Protect your home</h3>
         <Badge variant="secondary">Coming soon</Badge>

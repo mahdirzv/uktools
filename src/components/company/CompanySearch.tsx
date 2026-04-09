@@ -65,22 +65,28 @@ export function CompanySearch() {
 
   return (
     <div className="mt-8 flex flex-col gap-6">
-      <form onSubmit={handleSearch} className="flex gap-2">
-        <Input
-          placeholder="Search by company name or number..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="flex-1"
-        />
-        <Button type="submit" disabled={loading || !query.trim()}>
-          {loading ? (
-            <Loader2 className="size-4 animate-spin" />
-          ) : (
-            <Search className="size-4" />
-          )}
-          Search
-        </Button>
-      </form>
+      <section className="rounded-xl border bg-card p-4 ring-1 ring-foreground/10 sm:p-5">
+        <p className="text-sm font-medium">Search Companies House</p>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Enter a company name or company number to load trust signals.
+        </p>
+        <form onSubmit={handleSearch} className="mt-4 flex flex-col gap-2 sm:flex-row">
+          <Input
+            placeholder="Search by company name or number..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="flex-1"
+          />
+          <Button type="submit" disabled={loading || !query.trim()}>
+            {loading ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <Search className="size-4" />
+            )}
+            Search
+          </Button>
+        </form>
+      </section>
 
       {error && (
         <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">
@@ -89,44 +95,46 @@ export function CompanySearch() {
       )}
 
       {results.length > 0 && (
-        <div className="flex flex-col gap-2">
+        <section className="space-y-3">
           <p className="text-sm text-muted-foreground">
             {results.length} result{results.length !== 1 ? "s" : ""} found
           </p>
-          {results.map((item) => (
-            <button
-              key={item.company_number}
-              onClick={() => selectCompany(item.company_number)}
-              disabled={loadingReport}
-              className="flex flex-col gap-1 rounded-xl border bg-card p-4 text-left transition-colors hover:border-foreground/30 hover:bg-accent disabled:opacity-50"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <span className="font-medium">{item.title}</span>
-                <span className="shrink-0 text-xs text-muted-foreground">
-                  {item.company_number}
-                </span>
-              </div>
-              <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
-                <span className="capitalize">{item.company_status?.replace("-", " ")}</span>
-                {item.date_of_creation && (
-                  <>
-                    <span>·</span>
-                    <span>Inc. {item.date_of_creation}</span>
-                  </>
+          <div className="flex flex-col gap-2">
+            {results.map((item) => (
+              <button
+                key={item.company_number}
+                onClick={() => selectCompany(item.company_number)}
+                disabled={loadingReport}
+                className="flex flex-col gap-1.5 rounded-xl border bg-card p-4 text-left ring-1 ring-foreground/5 transition-colors hover:border-foreground/30 hover:bg-accent disabled:opacity-50"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <span className="font-medium">{item.title}</span>
+                  <span className="shrink-0 text-xs text-muted-foreground">
+                    {item.company_number}
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                  <span className="capitalize">{item.company_status?.replace("-", " ")}</span>
+                  {item.date_of_creation && (
+                    <>
+                      <span>·</span>
+                      <span>Inc. {item.date_of_creation}</span>
+                    </>
+                  )}
+                </div>
+                {item.address_snippet && (
+                  <span className="text-xs text-muted-foreground">
+                    {item.address_snippet}
+                  </span>
                 )}
-              </div>
-              {item.address_snippet && (
-                <span className="text-xs text-muted-foreground">
-                  {item.address_snippet}
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
+              </button>
+            ))}
+          </div>
+        </section>
       )}
 
       {loadingReport && (
-        <div className="flex items-center justify-center gap-2 py-8 text-sm text-muted-foreground">
+        <div className="flex items-center justify-center gap-2 rounded-xl border bg-card py-8 text-sm text-muted-foreground">
           <Loader2 className="size-4 animate-spin" />
           Loading company report...
         </div>

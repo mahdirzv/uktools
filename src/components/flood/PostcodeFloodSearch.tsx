@@ -63,31 +63,41 @@ export function PostcodeFloodSearch() {
   }
 
   return (
-    <div className="mt-8 space-y-8">
-      <form onSubmit={handleSearch} className="flex gap-3">
-        <Input
-          type="text"
-          placeholder="e.g. SW1A 1AA"
-          value={postcode}
-          onChange={(e) => setPostcode(e.target.value)}
-          className="max-w-[200px] uppercase"
-          disabled={loading}
-        />
-        <Button type="submit" disabled={loading || !postcode.trim()}>
-          {loading ? "Checking…" : "Check flood risk"}
-        </Button>
-      </form>
+    <div className="mt-8 space-y-6">
+      <section className="rounded-xl border bg-card p-4 ring-1 ring-foreground/10 sm:p-5">
+        <p className="text-sm font-medium">Search postcode</p>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Checks active warnings and nearby river gauge trends.
+        </p>
+        <form onSubmit={handleSearch} className="mt-4 flex flex-col gap-2 sm:flex-row">
+          <Input
+            type="text"
+            placeholder="e.g. SW1A 1AA"
+            value={postcode}
+            onChange={(e) => setPostcode(e.target.value)}
+            className="uppercase sm:max-w-[220px]"
+            disabled={loading}
+          />
+          <Button type="submit" disabled={loading || !postcode.trim()}>
+            {loading ? "Checking…" : "Check flood risk"}
+          </Button>
+        </form>
+      </section>
 
-      {error && <p className="text-sm text-destructive">{error}</p>}
+      {error && (
+        <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">
+          {error}
+        </div>
+      )}
 
       {data && (
-        <div className="space-y-8">
+        <div className="space-y-6">
           {data.warnings.length === 0 ? (
             <div className="rounded-lg border border-green-300 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-700 dark:bg-green-950/30 dark:text-green-200">
               ✓ No active flood warnings near {data.postcode}
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-3 rounded-xl border bg-card p-4 ring-1 ring-foreground/10 sm:p-5">
               <h2 className="font-semibold">
                 Active warnings ({data.warnings.length})
               </h2>
@@ -98,7 +108,7 @@ export function PostcodeFloodSearch() {
           )}
 
           {data.gauges.length > 0 && (
-            <div className="space-y-3">
+            <div className="space-y-3 rounded-xl border bg-card p-4 ring-1 ring-foreground/10 sm:p-5">
               <h2 className="font-semibold">Nearby river gauges</h2>
               <div className="grid gap-3 sm:grid-cols-3">
                 {data.gauges.map((g, i) => (

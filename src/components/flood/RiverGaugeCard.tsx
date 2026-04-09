@@ -18,7 +18,7 @@ function TrendIndicator({ trend }: { trend: RiverGauge["trend"] }) {
 
 export function RiverGaugeCard({ gauge }: { gauge: RiverGauge }) {
   return (
-    <div className="rounded-lg border p-4">
+    <div className="rounded-lg border bg-card p-4 ring-1 ring-foreground/5">
       <div className="flex items-start justify-between gap-2">
         <div>
           <p className="font-medium">{gauge.name}</p>

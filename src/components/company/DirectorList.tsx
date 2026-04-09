@@ -17,12 +17,12 @@ export function DirectorList({ officers }: { officers: Officer[] }) {
       <h3 className="text-sm font-semibold">
         Directors & Officers ({active.length} active)
       </h3>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 rounded-xl border bg-card p-2 ring-1 ring-foreground/5">
         {active.map((officer, i) => (
           <OfficerRow key={`active-${i}`} officer={officer} />
         ))}
         {resigned.length > 0 && (
-          <details className="group">
+          <details className="group rounded-lg border bg-background p-3">
             <summary className="cursor-pointer text-xs text-muted-foreground hover:text-foreground">
               {resigned.length} resigned officer{resigned.length !== 1 ? "s" : ""}
             </summary>

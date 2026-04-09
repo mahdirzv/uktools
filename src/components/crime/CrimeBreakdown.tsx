@@ -41,15 +41,16 @@ export function CrimeBreakdown({ data }: { data: CrimeData }) {
   const maxCount = data.breakdown[0]?.count || 1
 
   return (
-    <div className="space-y-6">
-      <div>
-        <p className="text-3xl font-bold tabular-nums">{data.total.toLocaleString()}</p>
-        <p className="text-sm text-muted-foreground">
+    <div className="space-y-4">
+      <div className="rounded-xl border bg-card p-4 ring-1 ring-foreground/10 sm:p-5">
+        <p className="text-xs uppercase tracking-wide text-muted-foreground">Reported crimes</p>
+        <p className="mt-1 text-3xl font-bold tabular-nums">{data.total.toLocaleString()}</p>
+        <p className="mt-1 text-sm text-muted-foreground">
           crimes reported near {data.postcode} in the last {data.months} months
         </p>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-3 rounded-xl border bg-card p-4 ring-1 ring-foreground/10 sm:p-5">
         {data.breakdown.map((item) => {
           const pct = (item.count / maxCount) * 100
           const tag = comparisonLabel(item.category, item.count, data.months)

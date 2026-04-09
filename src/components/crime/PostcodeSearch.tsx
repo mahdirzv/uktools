@@ -60,23 +60,31 @@ export function PostcodeSearch() {
   }
 
   return (
-    <div className="mt-8 space-y-8">
-      <form onSubmit={handleSearch} className="flex gap-3">
-        <Input
-          type="text"
-          placeholder="e.g. SW1A 1AA"
-          value={postcode}
-          onChange={(e) => setPostcode(e.target.value)}
-          className="max-w-[200px] uppercase"
-          disabled={loading}
-        />
-        <Button type="submit" disabled={loading || !postcode.trim()}>
-          {loading ? "Searching…" : "Check crime rates"}
-        </Button>
-      </form>
+    <div className="mt-8 space-y-6">
+      <section className="rounded-xl border bg-card p-4 ring-1 ring-foreground/10 sm:p-5">
+        <p className="text-sm font-medium">Search postcode</p>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Uses official Police UK datasets and shows the latest 12-month trend.
+        </p>
+        <form onSubmit={handleSearch} className="mt-4 flex flex-col gap-2 sm:flex-row">
+          <Input
+            type="text"
+            placeholder="e.g. SW1A 1AA"
+            value={postcode}
+            onChange={(e) => setPostcode(e.target.value)}
+            className="uppercase sm:max-w-[220px]"
+            disabled={loading}
+          />
+          <Button type="submit" disabled={loading || !postcode.trim()}>
+            {loading ? "Searching…" : "Check crime rates"}
+          </Button>
+        </form>
+      </section>
 
       {error && (
-        <p className="text-sm text-destructive">{error}</p>
+        <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">
+          {error}
+        </div>
       )}
 
       {data && (

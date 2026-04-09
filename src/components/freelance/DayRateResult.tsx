@@ -106,16 +106,16 @@ export function DayRateResult({ breakdown }: DayRateResultProps) {
         </div>
       )}
 
-      <div className="rounded-xl border p-5 space-y-3">
+      <div className="flex min-h-[220px] flex-col rounded-xl border p-5">
         <div className="flex items-center gap-2">
           <Shield className="size-5 text-primary" />
           <h3 className="text-base font-semibold">Contractor insurance</h3>
         </div>
-        <p className="text-sm text-muted-foreground">
+        <p className="mt-3 text-sm text-muted-foreground">
           Most clients require Professional Indemnity and Public Liability
           insurance before you start a contract.
         </p>
-        <div className="flex items-center gap-2">
+        <div className="mt-auto flex items-center gap-2 pt-4">
           <Button
             variant="outline"
             render={

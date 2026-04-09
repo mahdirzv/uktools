@@ -9,16 +9,16 @@ export function RenewalBadge({ renewalDate }: RenewalBadgeProps) {
 
   let color: string
   if (days < 7) {
-    color = "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+    color = "border-red-300 bg-red-100 text-red-700 dark:border-red-700 dark:bg-red-900/30 dark:text-red-300"
   } else if (days <= 30) {
-    color = "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
+    color = "border-amber-300 bg-amber-100 text-amber-700 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-300"
   } else {
-    color = "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+    color = "border-emerald-300 bg-emerald-100 text-emerald-700 dark:border-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300"
   }
 
   return (
     <span
-      className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${color}`}
+      className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${color}`}
     >
       {days === 0 ? "Today" : days === 1 ? "1 day" : `${days} days`}
     </span>

@@ -49,17 +49,20 @@ export function SubscriptionList() {
 
   return (
     <div className="mt-8 flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm text-muted-foreground">Total monthly spend</p>
-          <p className="text-3xl font-bold tracking-tight">
-            £{total.toFixed(2)}
-          </p>
+      <section className="rounded-xl border bg-card p-4 ring-1 ring-foreground/10 sm:p-5">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-wide text-muted-foreground">Total monthly spend</p>
+            <p className="text-3xl font-bold tracking-tight">£{total.toFixed(2)}</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              {subs.length} active subscription{subs.length !== 1 ? "s" : ""}
+            </p>
+          </div>
+          {!showForm && (
+            <Button onClick={() => setShowForm(true)}>+ Add subscription</Button>
+          )}
         </div>
-        {!showForm && (
-          <Button onClick={() => setShowForm(true)}>+ Add subscription</Button>
-        )}
-      </div>
+      </section>
 
       {showForm && (
         <AddSubscriptionForm
@@ -75,7 +78,7 @@ export function SubscriptionList() {
           No subscriptions yet. Add one to start tracking your spending.
         </div>
       ) : (
-        <div className="flex flex-col gap-2">
+        <div className="space-y-3">
           {sorted.map((sub) => (
             <div
               key={sub.id}
@@ -83,8 +86,8 @@ export function SubscriptionList() {
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <p className="font-medium">{sub.name}</p>
-                  <span className="rounded-full border px-2 py-0.5 text-xs text-muted-foreground">
+                  <p className="truncate font-medium">{sub.name}</p>
+                  <span className="rounded-full border bg-background px-2 py-0.5 text-xs text-muted-foreground">
                     {sub.category}
                   </span>
                 </div>

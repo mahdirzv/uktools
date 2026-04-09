@@ -38,7 +38,11 @@ export function AddSubscriptionForm({ onAdd, onCancel }: AddSubscriptionFormProp
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 rounded-xl border bg-card p-4 ring-1 ring-foreground/10">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 rounded-xl border bg-card p-4 ring-1 ring-foreground/10 sm:p-5">
+      <div>
+        <p className="text-sm font-medium">Add subscription</p>
+        <p className="mt-1 text-xs text-muted-foreground">Track renewal dates so you can cancel before charges hit.</p>
+      </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="sub-name">Name</Label>

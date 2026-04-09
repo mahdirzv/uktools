@@ -6,8 +6,8 @@ export function BroadbandAffiliate() {
   const url = awinLink("3655", "https://www.uswitch.com/broadband/")
 
   return (
-    <Card className="border-blue-200 bg-blue-50/50 dark:border-blue-800 dark:bg-blue-950/20">
-      <CardContent className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <Card className="border-primary/25 bg-primary/[0.03]">
+      <CardContent className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
           <p className="font-medium">
             Switching broadband could save you £200+/year
