@@ -45,9 +45,9 @@ export default function FreelancePage() {
           </div>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2">
-          <Card className="border-border/70 bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-sm">
-            <CardHeader className="space-y-3">
+        <div className="grid gap-5 sm:grid-cols-2 sm:auto-rows-fr">
+          <Card className="flex h-full flex-col border-border/70 bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-sm">
+            <CardHeader className="flex-1 space-y-3">
               <div className="flex items-center gap-2">
                 <Calculator className="size-5 text-primary" />
                 <CardTitle className="text-lg">Day Rate Calculator</CardTitle>
@@ -57,15 +57,15 @@ export default function FreelancePage() {
                 for NI, pension, and downtime.
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="mt-auto">
               <Button className="w-full justify-between" render={<Link href="/freelance/day-rate" />}>
                 Calculate your day rate
               </Button>
             </CardContent>
           </Card>
 
-          <Card className="border-border/70 bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-sm">
-            <CardHeader className="space-y-3">
+          <Card className="flex h-full flex-col border-border/70 bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-sm">
+            <CardHeader className="flex-1 space-y-3">
               <div className="flex items-center gap-2">
                 <Scale className="size-5 text-primary" />
                 <CardTitle className="text-lg">IR35 Checker</CardTitle>
@@ -75,7 +75,7 @@ export default function FreelancePage() {
                 the three key tests from case law.
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="mt-auto">
               <Button className="w-full justify-between" render={<Link href="/freelance/ir35" />}>
                 Check your IR35 status
               </Button>
