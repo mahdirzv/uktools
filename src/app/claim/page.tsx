@@ -1,11 +1,11 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { ArrowLeft, CreditCard, Wallet, Check } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { FaqAccordion } from "@/components/claim/FaqAccordion"
-import { CreditCard, Wallet, Check } from "lucide-react"
 import { VideoPlayer } from "@/components/shared/VideoPlayer"
 
 export const metadata: Metadata = {
@@ -19,6 +19,14 @@ export default function ClaimPage() {
     <div className="flex flex-1 flex-col">
       <main className="flex-1">
         <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
+          <Link
+            href="/"
+            className="mb-8 inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <ArrowLeft className="size-3.5" />
+            Back to UK Tools
+          </Link>
+
           <div className="text-center">
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
               Get your money back.

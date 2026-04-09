@@ -1,6 +1,15 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+
 export const metadata: Metadata = {
   title: "UK Tools — Free calculators and guides for UK consumers",
   description:
@@ -75,66 +84,62 @@ const tools = [
 
 export default function Home() {
   return (
-    <div className="mx-auto w-full max-w-5xl px-4 py-16 sm:py-24">
-      {/* Header */}
-      <div className="mb-12 text-center">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+    <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
+      <div className="mb-12 text-center sm:mb-16">
+        <h1 className="text-balance text-4xl font-bold tracking-tight sm:text-5xl">
           UK Tools
         </h1>
-        <p className="mx-auto mt-4 max-w-lg text-lg text-muted-foreground">
+        <p className="mx-auto mt-4 max-w-2xl text-pretty text-base text-muted-foreground sm:text-lg">
           Free calculators and guides built for UK consumers.
           No sign-up. No ads. Just useful tools.
         </p>
       </div>
 
-      {/* Grid on md+, compact list on mobile */}
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
         {tools.map((tool) => (
           <Link
             key={tool.href}
             href={tool.href}
-            className="group rounded-xl border bg-card p-5 transition-colors hover:border-foreground/25 hover:bg-accent
-                       flex items-center gap-3
-                       sm:flex-col sm:items-start sm:gap-4 sm:p-6"
+            className="group block rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
           >
-            {/* Mobile: inline row — emoji + title + arrow */}
-            {/* sm+: card layout — emoji on top, title, description, tags */}
-
-            <span className="shrink-0 text-2xl sm:text-3xl">{tool.emoji}</span>
-
-            <div className="min-w-0 flex-1 sm:flex-none sm:w-full">
-              <h2 className="font-semibold leading-snug group-hover:underline
-                             text-base sm:text-lg">
-                {tool.title}
-              </h2>
-
-              {/* Description — hidden on mobile, shown on sm+ */}
-              <p className="mt-1 hidden text-sm text-muted-foreground sm:block sm:line-clamp-2">
-                {tool.description}
-              </p>
-
-              {/* Tags — hidden on mobile */}
-              <div className="mt-3 hidden flex-wrap gap-1.5 sm:flex">
-                {tool.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium"
-                  >
-                    {tag}
+            <Card
+              size="sm"
+              className="h-full border border-border/70 py-0 ring-0 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-border hover:bg-accent/30 hover:shadow-sm motion-reduce:transform-none motion-reduce:transition-none"
+            >
+              <CardHeader className="gap-2 px-4 pt-4 sm:px-5 sm:pt-5">
+                <div className="flex items-start gap-3">
+                  <span className="mt-0.5 shrink-0 text-2xl sm:text-3xl">{tool.emoji}</span>
+                  <div className="min-w-0">
+                    <CardTitle className="text-base font-semibold leading-snug sm:text-lg">
+                      {tool.title}
+                    </CardTitle>
+                    <span className="mt-1 block text-sm text-muted-foreground sm:hidden">
+                      {tool.tags[0]}
+                    </span>
+                  </div>
+                  <span className="ml-auto pt-0.5 text-muted-foreground/45 transition-colors group-hover:text-muted-foreground sm:hidden">
+                    →
                   </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Arrow — only on mobile row layout */}
-            <span className="ml-auto shrink-0 text-muted-foreground/40 transition-colors group-hover:text-muted-foreground sm:hidden">
-              →
-            </span>
+                </div>
+                <CardDescription className="hidden text-sm leading-relaxed text-muted-foreground sm:block sm:line-clamp-2">
+                  {tool.description}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="hidden px-4 pb-4 sm:block sm:px-5 sm:pb-5">
+                <div className="flex flex-wrap gap-1.5">
+                  {tool.tags.map((tag) => (
+                    <Badge key={tag} variant="outline" className="bg-background/70">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </Link>
         ))}
       </div>
 
-      <p className="mt-10 text-center text-xs text-muted-foreground">
+      <p className="mt-10 text-center text-xs text-muted-foreground sm:mt-12">
         More tools coming soon — NHS dentist finder and more.
       </p>
     </div>

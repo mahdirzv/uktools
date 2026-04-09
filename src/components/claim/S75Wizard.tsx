@@ -85,7 +85,7 @@ function S75WizardInner() {
   const letter = generateSection75Letter(form)
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
+    <div className="mx-auto max-w-2xl pb-12 pt-6">
       <h1 className="mb-8 text-2xl font-semibold">Section 75 Claim</h1>
 
       <ClaimWizard steps={STEPS} currentStep={step} onBack={back}>

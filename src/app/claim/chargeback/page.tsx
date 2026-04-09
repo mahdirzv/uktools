@@ -1,4 +1,6 @@
 import type { Metadata } from "next"
+import Link from "next/link"
+import { ArrowLeft } from "lucide-react"
 import { ChargebackWizard } from "@/components/claim/ChargebackWizard"
 
 export const metadata: Metadata = {
@@ -8,5 +10,16 @@ export const metadata: Metadata = {
 }
 
 export default function ChargebackPage() {
-  return <ChargebackWizard />
+  return (
+    <div className="mx-auto w-full max-w-2xl px-4 pt-8 sm:px-6 sm:pt-10">
+      <Link
+        href="/claim"
+        className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+      >
+        <ArrowLeft className="size-3.5" />
+        Back to Claim Toolkit
+      </Link>
+      <ChargebackWizard />
+    </div>
+  )
 }
