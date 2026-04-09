@@ -47,6 +47,19 @@ function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 }
 
+async function fetchJson<T>(url: string, timeoutMs = 15000): Promise<T> {
+  const res = await fetch(url, {
+    signal: AbortSignal.timeout(timeoutMs),
+    next: { revalidate: 300 },
+  })
+
+  if (!res.ok) {
+    throw new Error(`Upstream request failed: ${res.status}`)
+  }
+
+  return res.json() as Promise<T>
+}
+
 export async function GET(req: NextRequest) {
   const postcode = req.nextUrl.searchParams.get("postcode")
   if (!postcode) {
@@ -56,11 +69,10 @@ export async function GET(req: NextRequest) {
   const clean = postcode.replace(/\s+/g, "").toUpperCase()
 
   try {
-    const pcRes = await fetch(`https://api.postcodes.io/postcodes/${clean}`, {
-      signal: AbortSignal.timeout(8000),
-      next: { revalidate: 300 },
-    })
-    const pcJson: PostcodeResult = await pcRes.json()
+    const pcJson = await fetchJson<PostcodeResult>(
+      `https://api.postcodes.io/postcodes/${clean}`,
+      10000
+    )
 
     if (!pcJson.result) {
       return NextResponse.json(
@@ -71,19 +83,21 @@ export async function GET(req: NextRequest) {
 
     const { latitude: lat, longitude: lng } = pcJson.result
 
-    const [warningsRes, stationsRes] = await Promise.all([
-      fetch(
+    const [warningsResult, stationsResult] = await Promise.allSettled([
+      fetchJson<{ items?: EAWarning[] }>(
         `https://environment.data.gov.uk/flood-monitoring/id/floods?lat=${lat}&long=${lng}&dist=5`,
-        { signal: AbortSignal.timeout(8000), next: { revalidate: 300 } }
+        15000
       ),
-      fetch(
+      fetchJson<{ items?: EAStation[] }>(
         `https://environment.data.gov.uk/flood-monitoring/id/stations?lat=${lat}&long=${lng}&dist=5`,
-        { signal: AbortSignal.timeout(8000), next: { revalidate: 300 } }
+        15000
       ),
     ])
 
-    const warningsJson = await warningsRes.json()
-    const stationsJson = await stationsRes.json()
+    const warningsJson =
+      warningsResult.status === "fulfilled" ? warningsResult.value : { items: [] }
+    const stationsJson =
+      stationsResult.status === "fulfilled" ? stationsResult.value : { items: [] }
 
     const warnings = (warningsJson.items ?? []).map((w: EAWarning) => ({
       description: w.description,
@@ -108,11 +122,10 @@ export async function GET(req: NextRequest) {
       topStations.map(async (station) => {
         try {
           const ref = station.notation
-          const readingsRes = await fetch(
+          const readingsJson = await fetchJson<{ items?: EAReading[] }>(
             `https://environment.data.gov.uk/flood-monitoring/id/stations/${ref}/readings?_limit=24&_sorted`,
-            { signal: AbortSignal.timeout(8000), next: { revalidate: 300 } }
+            10000
           )
-          const readingsJson = await readingsRes.json()
           const readings: EAReading[] = readingsJson.items ?? []
 
           const latest = readings[0]?.value ?? null
