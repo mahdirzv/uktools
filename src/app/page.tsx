@@ -13,13 +13,7 @@ import {
   Wrench,
 } from "lucide-react"
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
 export const metadata: Metadata = {
@@ -126,10 +120,9 @@ export default function Home() {
               className="group block rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-primary/35"
             >
               <Card
-                size="sm"
-                className="flex h-full flex-col rounded-2xl border border-border/65 bg-card/95 py-0 shadow-[0_1px_2px_rgb(0_0_0_/_0.04)] ring-0 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-[0_14px_24px_rgb(0_0_0_/_0.08)] motion-reduce:transform-none motion-reduce:transition-none"
+                className="h-full rounded-2xl border border-border/65 bg-card/95 py-0 shadow-[0_1px_2px_rgb(0_0_0_/_0.04)] ring-0 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-[0_14px_24px_rgb(0_0_0_/_0.08)] motion-reduce:transform-none motion-reduce:transition-none"
               >
-                <CardHeader className="gap-3 p-5">
+                <div className="flex h-full flex-col p-5">
                   <div className="flex items-start gap-3">
                     <span className="mt-0.5 shrink-0 rounded-xl border border-primary/10 bg-primary/10 p-2 text-primary shadow-sm transition-transform duration-200 group-hover:scale-105 motion-reduce:transform-none">
                       <Icon className="size-6 sm:size-7" />
@@ -146,23 +139,25 @@ export default function Home() {
                       Open
                     </span>
                   </div>
-                  <CardDescription className="hidden text-sm leading-6 text-muted-foreground sm:block sm:line-clamp-3">
+
+                  <CardDescription className="mt-3 hidden text-sm leading-relaxed text-muted-foreground sm:block sm:line-clamp-2">
                     {tool.description}
                   </CardDescription>
-                </CardHeader>
-                <CardContent className="mt-auto hidden p-5 pt-4 sm:block">
-                  <div className="flex flex-wrap gap-2">
-                    {tool.tags.map((tag) => (
-                      <Badge
-                        key={tag}
-                        variant="outline"
-                        className="rounded-full border border-border/70 bg-muted/60 px-2.5 py-1 text-[11px] font-medium tracking-tight text-foreground/75"
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
+
+                  <div className="mt-auto hidden pt-4 sm:block">
+                    <div className="flex flex-wrap gap-1.5">
+                      {tool.tags.map((tag) => (
+                        <Badge
+                          key={tag}
+                          variant="outline"
+                          className="rounded-full border border-border/70 bg-muted/60 px-2.5 py-0.5 text-[11px] font-medium tracking-tight text-foreground/75"
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
-                </CardContent>
+                </div>
               </Card>
             </Link>
           )
