@@ -1,7 +1,5 @@
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { contractorInsuranceLink } from "@/lib/awin"
-import { Shield } from "lucide-react"
+import { OfferCard } from "@/components/shared/OfferCard"
 import type { DayRateBreakdown } from "@/lib/day-rate-calc"
 
 function formatCurrency(value: number): string {
@@ -106,31 +104,14 @@ export function DayRateResult({ breakdown }: DayRateResultProps) {
         </div>
       )}
 
-      <div className="flex min-h-[220px] flex-col rounded-xl border p-5">
-        <div className="flex items-center gap-2">
-          <Shield className="size-5 text-primary" />
-          <h3 className="text-base font-semibold">Contractor insurance</h3>
-        </div>
-        <p className="mt-3 text-sm text-muted-foreground">
-          Most clients require Professional Indemnity and Public Liability
-          insurance before you start a contract.
-        </p>
-        <div className="mt-auto flex items-center gap-2 pt-4">
-          <Button
-            variant="outline"
-            render={
-              <a
-                href={contractorInsuranceLink()}
-                target="_blank"
-                rel="noopener noreferrer"
-              />
-            }
-          >
-            Compare contractor insurance
-          </Button>
-          <Badge variant="secondary">Coming soon</Badge>
-        </div>
-      </div>
+      <OfferCard
+        title="Contractor insurance"
+        description="Most clients require Professional Indemnity and Public Liability insurance before you start a contract."
+        ctaLabel="Compare contractor insurance"
+        href={contractorInsuranceLink()}
+        pending
+        minHeightClassName="min-h-[220px]"
+      />
     </div>
   )
 }

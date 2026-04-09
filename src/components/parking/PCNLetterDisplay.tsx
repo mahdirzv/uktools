@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { OfferCard } from "@/components/shared/OfferCard"
 import { awinLink, PENDING_MERCHANTS } from "@/lib/awin"
 
 interface PCNLetterDisplayProps {
@@ -45,35 +45,13 @@ export function PCNLetterDisplay({ letter }: PCNLetterDisplayProps) {
         <strong>28 days from the date of issue</strong>.
       </p>
 
-      <div className={`rounded-xl border p-5 ${isPending ? "opacity-60" : ""}`}>
-        <div className="flex items-center gap-2">
-          <h3 className="font-semibold">
-            While you&apos;re dealing with this — is your car insurance up for
-            renewal?
-          </h3>
-          {isPending && <Badge variant="secondary">Coming soon</Badge>}
-        </div>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Compare quotes and potentially save £300+
-        </p>
-        <div className="mt-3">
-          <Button
-            variant="outline"
-            disabled={isPending}
-            render={
-              isPending ? undefined : (
-                <a
-                  href={insuranceUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                />
-              )
-            }
-          >
-            Compare car insurance quotes
-          </Button>
-        </div>
-      </div>
+      <OfferCard
+        title="While you're dealing with this — is your car insurance up for renewal?"
+        description="Compare quotes and potentially save £300+"
+        ctaLabel="Compare car insurance quotes"
+        href={insuranceUrl}
+        pending={isPending}
+      />
     </div>
   )
 }

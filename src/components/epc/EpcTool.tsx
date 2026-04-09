@@ -5,6 +5,7 @@ import { Search, ArrowLeft, Zap, Flame, Lightbulb, Leaf } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { OfferCard } from "@/components/shared/OfferCard"
 import { awinLink } from "@/lib/awin"
 
 // ── EPC colour coding (official gov.uk scheme) ────────────────────────────
@@ -235,25 +236,16 @@ function EpcDetail({ record, onBack }: { record: EpcRecord; onBack: () => void }
       )}
 
       {/* Affiliate CTA */}
-      <Card className="border-primary/20 bg-primary/[0.03]">
-        <CardContent className="py-4">
-          <p className="text-sm font-semibold">Reduce your energy bills</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Switching energy tariff could save{" "}
-            <span className="font-medium text-foreground">£200–400/year</span> on top of
-            any home improvements.
-          </p>
-          <a
-            href={awinLink("3655", "https://www.uswitch.com/gas-electricity/")}
-            target="_blank"
-            rel="noopener noreferrer sponsored"
-            className="mt-3 inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
-          >
-            Compare energy deals →
-          </a>
-          <p className="mt-2 text-[10px] text-muted-foreground">Partner offer via Uswitch</p>
-        </CardContent>
-      </Card>
+      <OfferCard
+        title="Reduce your energy bills"
+        description="Switching energy tariff could save £200–400/year on top of any home improvements."
+        ctaLabel="Compare energy deals →"
+        href={awinLink("3655", "https://www.uswitch.com/gas-electricity/")}
+        buttonVariant="default"
+        buttonClassName="sm:w-auto"
+        disclosure="Partner offer via Uswitch"
+        className="border-primary/20 bg-primary/[0.03]"
+      />
     </div>
   )
 }
