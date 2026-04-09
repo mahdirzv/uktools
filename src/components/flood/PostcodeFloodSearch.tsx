@@ -8,6 +8,7 @@ import { FloodWarningCard } from "./FloodWarningCard"
 import { RiverGaugeCard } from "./RiverGaugeCard"
 import { HomeInsuranceCTA } from "./HomeInsuranceCTA"
 import { DataSourceFooter } from "@/components/shared/DataSourceFooter"
+import { PostcodeDataLicenceNotice } from "@/components/shared/PostcodeDataLicenceNotice"
 
 interface FloodWarning {
   severity: string
@@ -130,6 +131,7 @@ export function PostcodeFloodSearch() {
             coverage="England"
             caveat="For flood safety alerts, use official warning channels. This API is for informational use and may be delayed."
           />
+          <PostcodeDataLicenceNotice />
 
           <HomeInsuranceCTA />
         </div>

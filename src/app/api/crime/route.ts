@@ -49,6 +49,15 @@ export async function GET(request: NextRequest) {
   }
 
   const clean = postcode.replace(/\s+/g, "").toUpperCase()
+  if (clean.startsWith("BT")) {
+    return NextResponse.json(
+      {
+        error:
+          "BT postcodes are temporarily unavailable while we complete Northern Ireland commercial licensing.",
+      },
+      { status: 403 }
+    )
+  }
 
   const geoRes = await fetch(`${POSTCODES_API}/${encodeURIComponent(clean)}`)
   if (!geoRes.ok) {

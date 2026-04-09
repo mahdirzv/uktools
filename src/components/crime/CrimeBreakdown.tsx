@@ -3,6 +3,7 @@ import {
   BENCHMARK_POPULATION,
 } from "@/lib/crime-benchmarks"
 import { DataSourceFooter } from "@/components/shared/DataSourceFooter"
+import { PostcodeDataLicenceNotice } from "@/components/shared/PostcodeDataLicenceNotice"
 
 interface CrimeCategory {
   category: string
@@ -84,15 +85,18 @@ export function CrimeBreakdown({
       </div>
 
       {data.latestMonth && (
-        <DataSourceFooter
-          sourceLabel="data.police.uk"
-          sourceUrl="https://data.police.uk/about/"
-          licenceLabel="Open Government Licence v3.0"
-          licenceUrl="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
-          lastChecked={checkedAt}
-          coverage="England, Wales, Northern Ireland"
-          caveat={`Data covers crimes reported to ${formatMonth(data.latestMonth)} and is typically 2–3 months behind current date.`}
-        />
+        <>
+          <DataSourceFooter
+            sourceLabel="data.police.uk"
+            sourceUrl="https://data.police.uk/about/"
+            licenceLabel="Open Government Licence v3.0"
+            licenceUrl="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+            lastChecked={checkedAt}
+            coverage="England, Wales, Northern Ireland"
+            caveat={`Data covers crimes reported to ${formatMonth(data.latestMonth)} and is typically 2–3 months behind current date.`}
+          />
+          <PostcodeDataLicenceNotice />
+        </>
       )}
 
       <p className="text-xs text-muted-foreground">
